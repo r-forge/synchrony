@@ -13,5 +13,5 @@ RnwWeave: Sweave
 LaTeX: pdfLaTeX
 
 BuildType: Package
-PackagePath: ~/Google Drive/synchrony
+PackagePath: pkg
 PackageInstallArgs: --no-multiarch
