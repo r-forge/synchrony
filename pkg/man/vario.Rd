@@ -66,10 +66,10 @@ Returns a named list containing the following variables:
 \item{bins }{Center of each lag/bin}
 \item{mean.bin.dist }{Mean distance of each lag/bin}
 \item{vario }{Variogram values in each lag/bin}
-\item{pvals }{P-value for each lag/bin}
+\item{npoints }{Number of points in each lag/bin}
+\item{pvals }{p-value for each lag/bin}
 \item{rands }{\code{nrands} x \code{nbins} matrix of randomizations}
 \item{metric }{Type of variogram computed}
-\item{pvals }{P-value for each lag/bin}
 \item{mult.test.corr }{Correct for multiple tests?}
 \item{is.multivar }{Was the analysis performed on multivariate data?}
 }
