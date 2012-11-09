@@ -33,11 +33,11 @@ Measuring and testing for spatial synchrony. \emph{Ecology} 82:1668-1679.
 Tarik C. Gouhier (tarik.gouhier@gmail.com)
 }
 \note{
-This is the low-level function used by \code{\link{common.peaks.signif}}
+This is the low-level function used by \code{\link{peaks.signif}}
 }
 
 \seealso{
-\code{\link{common.peaks.signif}}
+\code{\link{peaks.signif}}
 }
 \examples{
 t1=cbind(1:100, runif(100))
