@@ -84,7 +84,7 @@ vario.fit <- function (vario, bins,
   }
   else if (type=="gaussian") {
     names=c("c0", "c1", "a")
-    vario.mod=try(nls(vario ~ (bins < a)*(c0+c1*(1-exp(-3*(bins^2)/(a^2))))+(bins >=a)*(c0+c1), 
+    vario.mod=try(nls(vario ~ c0+c1*(1-exp(-3*(bins^2)/(a^2))), 
                       start=list(c0=start.vals$c0,
                                  c1=start.vals$c1,
                                  a=start.vals$a), 
@@ -177,10 +177,7 @@ vario.stats <- function (data, opt, type, names, success) {
                   opt$par["c0"]+opt$par["c1"])
     }
     else if (type=="gaussian") {
-      fit=ifelse (bins < opt$par["a"],
-                  opt$par["c0"]+
-                    opt$par["c1"]*(1-exp(-3*(bins)^2/(opt$par["a"]^2))), 
-                  opt$par["c0"]+opt$par["c1"])
+      fit=opt$par["c0"]+opt$par["c1"]*(1-exp(-3*(bins)^2/(opt$par["a"]^2)))
     }
     else if (type=="periodic") {
       fit=opt$par["a"]*cos(opt$par["b"]*pi*(bins/max(bins))+opt$par["c"])
@@ -258,9 +255,7 @@ rmse.gauss <- function (x, data) {
   vario=data$vario; bins=data$bins
   
   if (a < max(bins) & a > 0 & c1 >= 0 & c0 >= 0) {
-    variohat=ifelse (bins < a, 
-                     c0+c1*(1-exp(-3*bins^2/(a^2))), 
-                     c0+c1)
+    variohat=c0+c1*(1-exp(-3*bins^2/(a^2)))
     rmse=sqrt(sum((vario-variohat)^2)/NROW(bins))
   }
   else
