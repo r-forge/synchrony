@@ -1,0 +1,18 @@
+bibentry("Manual",
+         title = "synchrony: tools for conducting spatial and spatiotemporal analyses in R",
+         author = person("Tarik C. Gouhier"),
+         address      = "tarik.gouhier@gmail.com",
+         year         = format(as.Date(meta$Date), "%Y"),
+         url          = "http://CRAN.R-project.org/package=synchrony",
+	 note         = paste("R package version", meta$Version),
+         
+         textVersion = 
+         paste("Gouhier, T. C. (", format(as.Date(meta$Date), "%Y"), "). ", 
+               "synchrony: tools for conducting spatial and spatiotemporal analyses in R",
+               sep=""),
+	       
+         mheader = "To cite in publications use:",
+	 
+	 mfooter = 
+         paste("Please cite this package if you use it for data analysis.")
+	)

@@ -1,0 +1,22 @@
+# Export functions
+export (coord2dist,
+	common.peaks.signif,
+	find.minmax.ind,
+	find.minmax,
+	kendall.w,
+	peaks,
+	phase.partnered,
+	phase.sync,
+	phase.sync.signif,
+	community.sync,
+	community.sync.signif,
+	surrogate.ts,
+	latlon2dist,
+	vario.fit,
+	vario,
+	vario.signif,
+	vario.func)
+
+# S3 method for plotting
+S3method(plot, vario)
+S3method(plot, variofit)
