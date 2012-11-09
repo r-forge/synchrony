@@ -1,0 +1,160 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+<title>synchrony R package</title>
+
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="author" content="Tarik C. Gouhier" />
+<meta name="description" content="Tarik C. Gouhier" />
+<meta name="keywords" content="ecology, marine, intertidal, theory" />
+<meta name="robots" content="index, follow, noarchive" />
+<meta name="googlebot" content="noarchive" />
+<link type="image/x-icon" href="images/favicon.ico" rel="shortcut icon" />
+<link rel="stylesheet" href="style.css" type="text/css" />
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36202995-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+
+    <!-- header starts-->
+  <div id="header-wrap">			
+                
+        <div id="header-photo">
+        <img alt="header photo" src="images/header.jpg" width="890" height="288" />
+    </div>
+                    <a name="top"></a>
+
+        <h1 id="logo-text"><a href="index.html" title="">Synchrony</a></h1>	
+        
+        <div  id="nav">
+            <ul>
+                <li id="current"><a href="index.html">Home</a></li>
+                <li><a href="https://r-forge.r-project.org/projects/synchrony/">Project</a></li>
+                <li><a href="https://r-forge.r-project.org/scm/?group_id=1370">Code</a></li>
+                <li><a href="https://r-forge.r-project.org/scm/browser.php?group_id=1370">Revisions</a></li>
+            <li><a href="https://r-forge.r-project.org/R/?group_id=1370">Download</a></li>                 
+            <li><a href="synchrony-manual.pdf">PDF Manual</a></li>                
+            </ul>		
+        </div>		
+        
+    <!-- header ends here -->
+    </div>
+    
+    <!-- content starts -->
+    <div id="content-outer" class="clear"><div id="content-wrapper">
+    
+        <!-- column-one -->
+<div id="content"><div class="col-one">
+                
+            <a name="top"></a>
+            <h2>Synchrony</h2>
+
+
+            <p>The synchrony package provides tools for computing spatial, temporal, and spatiotemporal statistics in <a href="http://www.r-project.org">R</a>. All of the functions are documented in the <a href="synchrony-manual.pdf">manual</a>, so I will highlight just a few  here. One of the primary objectives of the synchrony package is to quantify how ecological and environmental processes decay with distance. To that end, the synchrony package allows users to compute semivariograms and correlograms on univariate datasets using a suite of metrics (e.g., covariance, correlation, semivariance). Users can also fit a number of different models to empirical variograms.</p>
+            <p align="center"><img src="images/example_semivar.png" alt="" width="800" height="600" /></p>
+        <p>The figure above shows how the semivariance of upwelling conditions along the West coast of the US varies with lag distance. The spherical model appears to be the best (with the linear model following closely behind). 
+            Cross-correlograms can also be performed to determine the spatial relationship between two
+             variables. Finally, variograms and cross-variograms can be calculated for either univariate (single observation at
+              each location) or multivariate (multiple observations at each location) datasets. Multivariate cross-correlograms have been used extensively to quantify spatial synchrony in ecology.
+            </p>
+            <p align="center"><img src="images/example_synchrony.png" alt="" width="600" height="800" /></p>
+            <p>The figure above shows that the spatial synchrony of mussel cover  is nonlinear (periodic) whereas that of upwelling is linear. Statistically significant values are computed via Monte Carlo randomizations and indicated with filled circles. The number of points used to estimate  synchrony at each lag distance is indicated by the rug plots. </p>
+            
+            
+            <p>To download the development version of the package, visit the <a href="https://r-forge.r-project.org/R/?group_id=1370">download page</a> or type the following at the R command line:</p>
+<p><code>install.packages("synchrony", repos="http://R-Forge.R-project.org")</code></p>
+<p>Once this package makes it out of beta, it will be submitted to  <a href="http://cran.r-project.org/web/packages/synchrony/index.html">CRAN</a> and you will be able to download the release version by typing the following at the R command line:</p>
+<p><code>install.packages("synchrony")</code></p>
+            
+        <p class="postmeta"><a href="#top">Back to top</a>
+                  
+<h2><a name="refs" id="refs"></a>References</h2>
+                
+                 <ol class="references">
+                <li>Bjornstad, O. N., and W. Falck. 2001. Nonparametric spatial covariance functions: Estimation and testing. <em>Environmental and Ecological Statistics</em 8:53-70.></li>
+
+<li>
+Bjornstad, O. N., R. A. Ims, and X. Lambin. 1999. Spatial population dynamics: analyzing patterns and processes of population synchrony. <em>Trends in Ecology & Evolution</em> 14:427-432.
+</li>
+
+<li>
+Buonaccorsi, J. P., J. S. Elkinton, S. R. Evans, and A. M. Liebhold. 2001. Measuring and testing for spatial synchrony. <em>Ecology</em> 82:1668-1679.
+</li>
+
+<li>
+Cazelles, B., and L. Stone. 2003. Detection of imperfect population synchrony in an uncertain world. <em>Journal of Animal Ecology</em> 72:953-968.
+</li>
+
+<li>
+Fortin, M. J., and M. R. T. Dale. 2005. Spatial Analysis: A Guide for Ecologists. Cambridge University Press.
+</li>
+
+<li>
+Gouhier, T. C., and F. Guichard. 2007. Local disturbance cycles and the maintenance of spatial heterogeneity across scales in marine metapopulations. <em>Ecology</em> 88:647-657.
+</li>
+
+<li>
+Gouhier, T. C., F. Guichard, and A. Gonzalez. 2010. Synchrony and stability of food webs in metacommunities. <em>The American Naturalist</em> 175:E16-E34.
+</li>
+
+<li>
+Gouhier, T. C., F. Guichard, and B. A. Menge. 2010. <em>Ecological processes can synchronize marine population dynamics over continental scales. Proceedings of the National Academy of Sciences</em> 107:8281-8286.
+</li>
+
+<li>
+Loreau, M., and C. de Mazancourt. 2008. Species synchrony and its drivers: Neutral and nonneutral community dynamics in fluctuating environments. <em>The American Naturalist</em> 172:E48-E66.
+</li>
+
+<li>
+Vasseur, D. A. 2007. Environmental colour intensifies the Moran effect when population dynamics are spatially heterogeneous. <em>Oikos</em> 116:1726-1736.
+</li>
+
+<li>
+Zar, J. H. 1999. Biostatistical Analysis, Fourth edition. Prentice-Hall, Inc., Upper Saddle River, NJ.
+</li>
+        </ol>
+    <p class="postmeta"><a href="#top">Back to top</a></p>
+
+            
+      </div></div>
+        
+        
+        <!-- column-two -->
+        <div class="col-two">
+                
+        
+        </div>
+        
+        <!-- column-three -->
+        
+    
+    <!-- contents end here -->	
+    </div></div>
+
+    <!-- footer starts here -->	
+    <div id="footer-wrapper">
+    
+        <!-- column-one -->
+        <div id="footer"><div class="col-one">&nbsp; Content &copy; 2012 <strong><a href="mailto:tarik.gouhier@gmail.com">Tarik C. Gouhier</a></strong> | Design based on a <a href="http://www.styleshout.com/">template</a> </div></div>
+            
+    </div>
+    <!-- footer ends here -->
+
+</body>
+</html>
