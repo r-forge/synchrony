@@ -69,7 +69,7 @@ legend(x="topleft", legend=paste(c("Spherical AIC:", "Exponential AIC:",
                                    format(mod.exp$AIC, dig=2), 
                                    format(mod.gau$AIC, dig=2), 
        format(mod.lin$AIC, dig=2))), lty=1, col=c("red", "black", "blue", "green"), 
-       box.lty=0)
+       bty="n")
 
 ## Correlogram
 cover=subset(pisco.data, subset=year==2000, select=c("latitude", "longitude", "mussel_abund"))
