@@ -1,6 +1,5 @@
 coord2dist <- function (coords, is.latlon=TRUE, lower.tri=TRUE) {
   N=NROW(coords) 
-  ## all.combs=t(combn(N, 2))
   all.combs=expand.grid(1:N, 1:N)
   ## Compute great circle distance
   if (is.latlon) {
