@@ -13,9 +13,9 @@ Tools for computing spatial, temporal, and spatiotemporal statistics
 Package: \tab synchrony\cr
 Type: \tab Package\cr
 Version: \tab 0.1\cr
-Date: \tab 2012-11-06\cr
+Date: \tab 2012-11-10\cr
 License: \tab GPL (>=2)\cr
-URL: \tab http://cran.r-project.org/package=synchrony\cr
+URL: \tab http://synchrony.r-forge.r-project.org\cr
 LazyLoad: \tab yes\cr
 }
 }
