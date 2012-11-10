@@ -75,7 +75,7 @@ sync=phase.sync(t1, t2)
 hist(sync$deltaphase$mod_phase_diff_2pi)
 
 ## Compute concordant peaks
-p=common.peaks.signif(t1, t2)
+p=peaks.signif(t1, t2)
 ## Find proportion of time steps where both time series peak together
 p$peaks
 ## Plot (null) distribution of proportion of time steps where both time

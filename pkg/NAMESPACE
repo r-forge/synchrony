@@ -1,6 +1,5 @@
 # Export functions
 export (coord2dist,
-	common.peaks.signif,
 	find.minmax.ind,
 	find.minmax,
 	kendall.w,
