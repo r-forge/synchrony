@@ -6,7 +6,7 @@ vario.fit
 \description{
 Fit model to the empirical variogram
 }
-\usage{vario.fit (vario, bins, 
+\usage{vario.fit (vario, bins, weights = rep(1, length(vario)),
                        type = c("spherical", "gaussian", "nugget", "linear", 
                        "exponential", "sill", "periodic", "hole"),
                        start.vals = list(c0 = min(vario), c1 = max(vario), 
@@ -16,22 +16,28 @@ Fit model to the empirical variogram
 \arguments{
   \item{vario}{Empirical variogram from \code{emp.vario} function}
   \item{bins}{Number of bins or lag distances from \code{emp.vario} function}
-
-  \item{type}{Type of variogram model to fit to the data. Default is \code{spherical}. Other options
-  are \code{gaussian}, \code{nugget}, \code{linear}, \code{exponential}, \code{sill}, 
-  \code{periodic}, and \code{hole}
+  \item{weights}{Vector of weights of the same length as \code{vario}. If \code{weights} is a vector 
+  containing the number of points in each distance bin, the model will be fit via 
+  weighted least squares with the weights corresponding to the proportion of points
+  within each bin (i.e., weights sum to 1). Default is a vector of weights equal to 1}
+  \item{type}{Type of variogram model to fit to the data. Default is \code{spherical}. 
+  Other options are \code{gaussian}, \code{nugget}, \code{linear}, \code{exponential}, 
+  \code{sill}, \code{periodic}, and \code{hole}
   }
 \item{start.vals}{Named list containing the start values for the variogram model: 
-\code{c0}: nugget, \code{c1}: sill, \code{a}: spatial range; \code{b}: slope; \code{c}: frequency}
+\code{c0}: nugget, \code{c1}: sill, \code{a}: spatial range; \code{b}: slope; 
+\code{c}: frequency}
 }
 \value{
 Return a named list containing the following variables:
 
 \item{vario }{Empirical variogram values}
 \item{bins }{Empirical variogram bins/lag distances}
-\item{AIC }{AIC score of the model fit}
-\item{RMSE }{Root Mean Square Error of the model fit}
-\item{params }{Named list containing the best estimates for the model parameters}
+\item{AIC }{AIC score of the model fit: \eqn{AIC=n\times log\left(\frac{SSE}{n}\right)+2\times(p+1)}
+ where \eqn{n} is the number of points in the variogram, \eqn{SSE=\sum{(\hat{x}_{i}-x_{i}})^2},
+ and \eqn{p} is the number of parameters}
+\item{RMSE }{Root Mean Square Error of the model fit: \eqn{\sqrt{\frac{SSE}{n}}}}
+\item{params }{Named list containing the best model parameter estimates}
 \item{fit }{Predicted variogram values from the model fit}
 \item{nls.success }{did \code{nls} succeed?}
 }
@@ -56,7 +62,10 @@ d=subset(pisco.data, subset=year==2000, select=c("latitude", "longitude", "upwel
 semiv=vario(data=d)
 plot(semiv, xlab="Lag distance (km)")
 mod.sph=vario.fit(semiv$vario, semiv$mean.bin.dist)
-mod.exp=vario.fit(semiv$vario, semiv$mean.bin.dist, type="expo")
+## Weighted least squares fit based on the number of points
+mod.exp=vario.fit(semiv$vario, semiv$mean.bin.dist, 
+                  weights=semiv$npoints/sum(semiv$npoints), 
+                  type="expo")
 mod.gau=vario.fit(semiv$vario, semiv$mean.bin.dist, type="gauss")
 mod.lin=vario.fit(semiv$vario, semiv$mean.bin.dist, type="lin")
 lines(semiv$mean.bin.dist, mod.sph$fit, col="red")

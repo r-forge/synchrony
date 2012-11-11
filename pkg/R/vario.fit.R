@@ -1,4 +1,4 @@
-vario.fit <- function (vario, bins,
+vario.fit <- function (vario, bins, weights=rep(1, length(vario)),
                        type=c("spherical", "gaussian", "nugget", "linear",
                               "exponential", "sill", "periodic", "hole"),
                        start.vals=list(c0=min(vario), 
@@ -13,10 +13,10 @@ vario.fit <- function (vario, bins,
   type=match.arg(tolower(type), types)
   
   ## Linear model used to determine initial parameters for finicky NLS
-  vario.lin=lm(vario ~ bins)
+  vario.lin=lm(vario ~ bins, weights=weights)
   
   if (type=="nugget") {
-    vario.mod=lm(vario ~ 1)
+    vario.mod=lm(vario ~ 1, weights=weights)
     names=c("nugget")    
     success=TRUE
   }
@@ -28,6 +28,7 @@ vario.fit <- function (vario, bins,
   else if (type=="sill") {
     names=c("c0", "c1", "a", "b")
     vario.mod=try(nls(vario ~ (bins < a)*(c0+b*bins) + (bins >=a)*(c0+c1), 
+                      weights=weights,
                       start=list(c0=start.vals$c0,
                                  c1=start.vals$c1,
                                  a=start.vals$a,
@@ -38,7 +39,8 @@ vario.fit <- function (vario, bins,
       vario.mod=optim(c(start.vals$c0, 
                         start.vals$c1,
                         start.vals$a,
-                        coef(vario.lin)[2]), rmse.sill, control=list(maxit=200000),
+                        coef(vario.lin)[2]),
+                        rmse.sill, weights=weights, control=list(maxit=200000),
                       data=data)
     }
     else {
@@ -47,7 +49,8 @@ vario.fit <- function (vario, bins,
   }
   else if (type=="exponential") {
     names=c("c0", "c1", "a")
-    vario.mod=try(nls(vario ~ c0+c1*(1-exp(bins/a)), 
+    vario.mod=try(nls(vario ~ c0+c1*(1-exp(bins/a)),
+                      weights=weights,
                       start=list(c0=start.vals$c0,
                                  c1=start.vals$c1,
                                  a=start.vals$a), 
@@ -57,7 +60,8 @@ vario.fit <- function (vario, bins,
       success=FALSE
       vario.mod=optim(c(start.vals$c0, 
                         start.vals$c1,
-                        start.vals$a), rmse.expo, control=list(maxit=200000),
+                        start.vals$a),
+                        rmse.expo, weights=weights, control=list(maxit=200000),
                       data=data)
     }
     else {
@@ -66,7 +70,8 @@ vario.fit <- function (vario, bins,
   }
   else if (type=="spherical") {
     names=c("c0", "c1", "a")
-    vario.mod=try(nls(vario ~ (bins < a)*(c0+c1*((3*bins)/(2*a)-(1/2)*(bins/a)^3))+(bins >=a)*(c0+c1), 
+    vario.mod=try(nls(vario ~ (bins < a)*(c0+c1*((3*bins)/(2*a)-(1/2)*(bins/a)^3))+(bins >=a)*(c0+c1),
+                      weights=weights,
                       start=list(c0=start.vals$c0,
                                  c1=start.vals$c1,
                                  a=start.vals$a), 
@@ -75,7 +80,8 @@ vario.fit <- function (vario, bins,
       success=FALSE
       vario.mod=optim(c(start.vals$c0, 
                         start.vals$c1,
-                        start.vals$a), rmse.sphere, control=list(maxit=200000),
+                        start.vals$a),
+                        rmse.sphere, weights=weights, control=list(maxit=200000),
                       data=data)
     }
     else {
@@ -85,15 +91,18 @@ vario.fit <- function (vario, bins,
   else if (type=="gaussian") {
     names=c("c0", "c1", "a")
     vario.mod=try(nls(vario ~ c0+c1*(1-exp(-3*(bins^2)/(a^2))), 
+                      weights=weights,
                       start=list(c0=start.vals$c0,
                                  c1=start.vals$c1,
                                  a=start.vals$a), 
                       data=data), silent=TRUE)
+
     if (class(vario.mod)=="try-error") {
       success=FALSE
       vario.mod=optim(c(start.vals$c0, 
                         start.vals$c1,
-                        start.vals$a), rmse.gauss, control=list(maxit=200000),
+                        start.vals$a),
+                        rmse.gauss, weights=weights, control=list(maxit=200000),
                       data=data)
     }
     else {
@@ -103,6 +112,7 @@ vario.fit <- function (vario, bins,
   else if (type=="periodic") {
     names=c("a", "b", "c")
     vario.mod=try(nls(vario ~ a*cos(b*pi/max(bins)+c)*bins, 
+                      weights=weights,
                       start=list(a=start.vals$a,
                                  b=start.vals$b,
                                  c=start.vals$c), 
@@ -111,7 +121,8 @@ vario.fit <- function (vario, bins,
       success=FALSE
       vario.mod=optim(c(start.vals$a, 
                         start.vals$b,
-                        start.vals$c), rmse.period, control=list(maxit=200000),
+                        start.vals$c),
+                        rmse.period, weights=weights, control=list(maxit=200000),
                       data=data)
     }
     else {
@@ -121,6 +132,7 @@ vario.fit <- function (vario, bins,
   else if (type=="hole") {
     names=c("c0", "c1", "a")
     vario.mod=try(nls(vario ~ c0+c1*(1-(a*sin(bins/a))/bins), 
+                      weights=weights,
                       start=list(c0=start.vals$c0,
                                  c1=start.vals$c1,
                                  a=start.vals$a), 
@@ -129,7 +141,8 @@ vario.fit <- function (vario, bins,
       success=FALSE
       vario.mod=optim(c(start.vals$c0, 
                         start.vals$c1,
-                        start.vals$a), rmse.hole, control=list(maxit=200000),
+                        start.vals$a),
+                      rmse.hole, weights=weights, control=list(maxit=200000),
                       data=data)
     }
     else {
@@ -147,16 +160,13 @@ vario.fit <- function (vario, bins,
 vario.stats <- function (data, opt, type, names, success) {
   vario=data$vario
   bins=data$bins
+  N=length(vario)
   if (success) {
-    mod.aic=AIC(opt)
     fit=predict(opt)
     params=coef(opt)
     rmse=sqrt(mean((predict(opt)-vario)^2))
   }
   else {
-    N=length(vario)
-    mod.logLik=0.5*(-N*(log(2*pi)+1-log(N)+log(opt$value^2*N)))
-    mod.aic=-2*mod.logLik+2*(length(opt$par)+1)
     names(opt$par)=names
     params=opt$par
     rmse=opt$value
@@ -186,77 +196,79 @@ vario.stats <- function (data, opt, type, names, success) {
       fit=opt$par["c0"]+opt$par["c1"]*(1-(opt$par["a"]*sin(bins/opt$par["a"]))/bins)      
     }    
   }
+  
+  mod.aic=N*log(rmse^2)+2*(length(params)+1)
   names(params)=names
   return (list(AIC=mod.aic, rmse=rmse, params=params, fit=fit, nls.success=success))
 } 
 
-rmse.period <- function (x, data) {
-  a=x[1]; b=x[2]; c=x[3]
+rmse.period <- function (x, weights, data) {
+  a=x[1]; b=x[2]; c=x[3];
   vario=data$vario; bins=data$bins
   
   variohat=a*cos(b*pi*(bins/max(bins))+c)
-  rmse=sqrt(sum((vario-variohat)^2)/NROW(bins))  
+  rmse=sqrt(weighted.mean((vario-variohat)^2, weights))
 }
 
-rmse.hole <- function (x, data) {
+rmse.hole <- function (x, weights, data) {
   c0=x[1]; c1=x[2]; a=x[3]
   vario=data$vario; bins=data$bins
   
   if (a >= 0 & a < max(bins) & c0 >= 0 & c1 >= 0) {
     variohat=c0+c1*(1-(a*sin(bins/a))/bins)
-    rmse=sqrt(sum((vario-variohat)^2)/NROW(bins))
+    rmse=sqrt(weighted.mean((vario-variohat)^2, weights))
   }
   else
     rmse=Inf
 }
 
-rmse.sill <- function (x, data) {
+rmse.sill <- function (x, weights, data) {
   c0=x[1]; c1=x[2]; a=x[3]; b=x[4]
   vario=data$vario; bins=data$bins
   
-  if (a < max(bins) & a > 0 & b >= 0 & c1 >= 0 & c0 >= 0) {
+  if (a < max(bins) & a >= 0 & b >= 0 & c1 >= 0 & c0 >= 0) {
     variohat=ifelse (bins < a, 
                      c0+b*bins, 
                      c0+c1)
-    rmse=sqrt(sum((vario-variohat)^2)/NROW(bins))
+    rmse=sqrt(weighted.mean((vario-variohat)^2, weights))
   }
   else
     rmse=Inf
 }
 
-rmse.expo <- function (x, data) {
+rmse.expo <- function (x, weights, data) {
   c0=x[1]; c1=x[2]; a=x[3]
   vario=data$vario; bins=data$bins
   
-  if (a < max(bins) & a > 0 & c1 >= 0 & c0 >= 0) {
+  if (a < max(bins) & a >= 0 & c1 >= 0 & c0 >= 0) {
     variohat=c0+c1*(1-exp(bins/a))
-    rmse=sqrt(sum((vario-variohat)^2)/NROW(bins))
+    rmse=sqrt(weighted.mean((vario-variohat)^2, weights))
   }
   else
     rmse=Inf
 }
 
-rmse.sphere <- function (x, data) {
+rmse.sphere <- function (x, weights, data) {
   c0=x[1]; c1=x[2]; a=x[3]
   vario=data$vario; bins=data$bins
   
-  if (a < max(bins) & a > 0 & c1 >= 0 & c0 >= 0) {
+  if (a < max(bins) & a >= 0 & c1 >= 0 & c0 >= 0) {
     variohat=ifelse (bins < a, 
                      c0+c1*(3*bins/(2*a)-0.5*(bins/a)^3), 
                      c0+c1)
-    rmse=sqrt(sum((vario-variohat)^2)/NROW(bins))
+    rmse=sqrt(weighted.mean((vario-variohat)^2, weights))
   }
   else
     rmse=Inf
 }
 
-rmse.gauss <- function (x, data) {
+rmse.gauss <- function (x, weights, data) {
   c0=x[1]; c1=x[2]; a=x[3]
   vario=data$vario; bins=data$bins
   
-  if (a < max(bins) & a > 0 & c1 >= 0 & c0 >= 0) {
+  if (a < max(bins) & a >= 0 & c1 >= 0 & c0 >= 0) {
     variohat=c0+c1*(1-exp(-3*bins^2/(a^2)))
-    rmse=sqrt(sum((vario-variohat)^2)/NROW(bins))
+    rmse=sqrt(weighted.mean((vario-variohat)^2, weights))
   }
   else
     rmse=Inf
