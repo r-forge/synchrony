@@ -4,8 +4,9 @@
 Phase partnered time series
 }
 \description{
-Create two time series with specific autocorrelation \eqn{\gamma} and cross-correlation
-\eqn{\rho}
+Create two time series with specific autocorrelation \eqn{\gamma}, cross-correlation
+\eqn{\rho}, mean \code{ts.mean}, and standard deviation \code{ts.sd} using the 
+phase partnered algorithm described by Vasseur (2007)
 }
 \usage{
 phase.partnered (n = 2000, rho = 1, gamma = 1, ts.sd = 0.1, ts.mean = 0)

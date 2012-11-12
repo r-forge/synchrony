@@ -1,5 +1,6 @@
 # Export functions
 export (coord2dist,
+	correlated.matrix,
 	find.minmax.ind,
 	find.minmax,
 	kendall.w,
