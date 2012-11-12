@@ -34,7 +34,7 @@ Returns a named list containing the following:
 
 \item{rho }{Correlation between the columns}
 \item{sigma }{Standard deviation of the columns}
-\item{sigma }{Mean of the columns}
+\item{mu }{Mean of the columns}
 \item{community }{\code{ntimes} x \code{nspecies} matrix}
 
 }

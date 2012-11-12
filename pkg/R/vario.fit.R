@@ -1,7 +1,7 @@
 vario.fit <- function (vario, bins, weights=rep(1, length(vario)),
                        type=c("spherical", "gaussian", "nugget", "linear",
                               "exponential", "sill", "periodic", "hole"),
-                       start.vals=list(c0=min(vario), 
+                       start.vals=list(c0=0, 
                                        c1=max(vario), 
                                        a=max(bins)/4,
                                        b=0.1,
@@ -21,14 +21,34 @@ vario.fit <- function (vario, bins, weights=rep(1, length(vario)),
     success=TRUE
   }
   else if (type=="linear") {
-    vario.mod=vario.lin
-    names=c("intercept", "slope")
-    success=TRUE
+    #vario.mod=vario.lin
+    #names=c("intercept", "slope")
+    #success=TRUE
+    names=c("c0", "b")
+    vario.mod=try(nls(vario ~ c0+b*bins, 
+                      weights=weights, 
+                      lower=c(c0=0, b=-Inf),
+                      alogrithm="port",
+                      start=list(c0=start.vals$c0,
+                                 b=coef(vario.lin)[2]), 
+                      data=data), silent=TRUE)
+    if (class(vario.mod)=="try-error") {
+      success=FALSE
+      vario.mod=optim(c(start.vals$c0, 
+                        coef(vario.lin)[2]),
+                      rmse.lin, weights=weights, control=list(maxit=200000),
+                      data=data)
+    }
+    else{
+      success=TRUE
+    }
   }
   else if (type=="sill") {
     names=c("c0", "c1", "a", "b")
     vario.mod=try(nls(vario ~ (bins < a)*(c0+b*bins) + (bins >=a)*(c0+c1), 
-                      weights=weights,
+                      weights=weights, 
+                      lower=c(c0=0, c1=0, a=0, b=-Inf),
+                      alogrithm="port",                      
                       start=list(c0=start.vals$c0,
                                  c1=start.vals$c1,
                                  a=start.vals$a,
@@ -50,7 +70,9 @@ vario.fit <- function (vario, bins, weights=rep(1, length(vario)),
   else if (type=="exponential") {
     names=c("c0", "c1", "a")
     vario.mod=try(nls(vario ~ c0+c1*(1-exp(bins/a)),
-                      weights=weights,
+                      weights=weights, 
+                      lower=c(c0=0, c1=0, a=0),
+                      alogrithm="port",
                       start=list(c0=start.vals$c0,
                                  c1=start.vals$c1,
                                  a=start.vals$a), 
@@ -71,10 +93,12 @@ vario.fit <- function (vario, bins, weights=rep(1, length(vario)),
   else if (type=="spherical") {
     names=c("c0", "c1", "a")
     vario.mod=try(nls(vario ~ (bins < a)*(c0+c1*((3*bins)/(2*a)-(1/2)*(bins/a)^3))+(bins >=a)*(c0+c1),
-                      weights=weights,
+                      weights=weights, 
+                      lower=c(c0=0, c1=0, a=0),
+                      alogrithm="port",
                       start=list(c0=start.vals$c0,
                                  c1=start.vals$c1,
-                                 a=start.vals$a), 
+                                 a=start.vals$a),
                       data=data), silent=TRUE)
     if (class(vario.mod)=="try-error") {
       success=FALSE
@@ -91,7 +115,9 @@ vario.fit <- function (vario, bins, weights=rep(1, length(vario)),
   else if (type=="gaussian") {
     names=c("c0", "c1", "a")
     vario.mod=try(nls(vario ~ c0+c1*(1-exp(-3*(bins^2)/(a^2))), 
-                      weights=weights,
+                      weights=weights, 
+                      lower=c(c0=0, c1=0, a=0),
+                      alogrithm="port",                      
                       start=list(c0=start.vals$c0,
                                  c1=start.vals$c1,
                                  a=start.vals$a), 
@@ -132,7 +158,9 @@ vario.fit <- function (vario, bins, weights=rep(1, length(vario)),
   else if (type=="hole") {
     names=c("c0", "c1", "a")
     vario.mod=try(nls(vario ~ c0+c1*(1-(a*sin(bins/a))/bins), 
-                      weights=weights,
+                      weights=weights, 
+                      lower=c(c0=0, c1=0, a=0),
+                      alogrithm="port",                      
                       start=list(c0=start.vals$c0,
                                  c1=start.vals$c1,
                                  a=start.vals$a), 
@@ -176,6 +204,9 @@ vario.stats <- function (data, opt, type, names, success) {
                   opt$par["c0"]+opt$par["b"]*bins,
                   opt$par["c0"]+opt$par["c1"])
     }
+    else if (type=="linear") {
+      fit=opt$par["c0"]+opt$par["b"]*bins
+    }
     else if (type=="exponential") {
       fit=opt$par["c0"]+opt$par["c1"]*(1-exp(bins/opt$par["a"]))
     }
@@ -202,8 +233,20 @@ vario.stats <- function (data, opt, type, names, success) {
   return (list(AIC=mod.aic, rmse=rmse, params=params, fit=fit, nls.success=success))
 } 
 
+rmse.lin <- function (x, weights, data) {
+  c0=x[1]; b=x[2]
+  vario=data$vario; bins=data$bins
+  
+  if (c0 >= 0) {
+    variohat=c0+b*bins 
+    rmse=sqrt(weighted.mean((vario-variohat)^2, weights))
+  }
+  else
+    rmse=Inf
+}
+
 rmse.period <- function (x, weights, data) {
-  a=x[1]; b=x[2]; c=x[3];
+  a=x[1]; b=x[2]; c=x[3]
   vario=data$vario; bins=data$bins
   
   variohat=a*cos(b*pi*(bins/max(bins))+c)

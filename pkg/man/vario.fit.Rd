@@ -9,7 +9,7 @@ Fit model to the empirical variogram
 \usage{vario.fit (vario, bins, weights = rep(1, length(vario)),
                        type = c("spherical", "gaussian", "nugget", "linear", 
                        "exponential", "sill", "periodic", "hole"),
-                       start.vals = list(c0 = min(vario), c1 = max(vario), 
+                       start.vals = list(c0 = 0, c1 = max(vario), 
                                           a = max(bins)/4, b=0.1, c=0.1)) 
 }
 
