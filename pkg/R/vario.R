@@ -51,9 +51,9 @@ vario <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, cente
     if (centered)
       vals=vals-mean(vals, na.rm=T)
     
-    vario=sapply(split(vals, grpdata), FUN=mean, na.rm=TRUE)
-    npoints=sapply(split(vals, grpdata), FUN=function (x) {length(na.omit(x))})
-    bin.dist=sapply(split(all.dists, grpdata), FUN=mean, na.rm=TRUE)
+    vario=tapply(vals, grpdata, mean, na.rm=T)
+    npoints=tapply(vals, grpdata, FUN=function (x) {length(na.omit(x))})
+    bin.dist=tapply(all.dists, grpdata, FUN=mean, na.rm=TRUE)
   }
   else {
     bin.dist=numeric(length(bins)-1)*NA

@@ -13,7 +13,7 @@ vario.signif <- function (nrands=999, bins, all.combs, grpdata, data, data2=data
     
     if (is.multivar==TRUE) {
       vals=data
-      rands[i,]=sapply(split(vals, s), FUN=mean, na.rm=TRUE)
+      rands[i,]=tapply(vals, s, FUN=mean, na.rm=TRUE)
     }
     else {
       for (j in 1:(length(bins))) {        
