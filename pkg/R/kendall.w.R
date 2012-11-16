@@ -4,7 +4,7 @@ function (data) {
   M=NCOL(data)
   ## Rank data
   ranks=apply(as.matrix(data), MARGIN=2, rank)
-  ties=unlist(apply(ranks, MARGIN=2, FUN=function (x) {table(x)[table(x) >1]}))
+  ties=unlist(apply(ranks, MARGIN=2, FUN=function (x) {tab=table(x); tab[tab >1]}))
   ties=sum(ties^3-ties)
 
   sum.ranks.row=rowSums(ranks)
