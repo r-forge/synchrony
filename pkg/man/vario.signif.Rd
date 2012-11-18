@@ -9,6 +9,8 @@ Determine the significance of the empirical variogram via Monte Carlo randomizat
 \usage{vario.signif (nrands = 999, bins, all.combs, grpdata, data, data2, type, 
                               vario, glob.mean = NULL, glob.sd = NULL, 
                               glob.N = NULL, is.multivar = FALSE,
+                              alternative = c("one.tailed", "two.tailed"),
+                              centered, regional.mean,
                               mult.test.corr=c(FALSE, "holm", "hochberg", 
                                                "sidak", "bonferroni"))
                               }
@@ -38,7 +40,10 @@ correlation, \code{spearman} for Spearman correlation, \code{kendall} for Kendal
 \item{glob.mean}{Global mean}
 \item{glob.sd}{Global standard deviation}
 \item{glob.N}{Global number of points}
-\item{is.multivar }{Is the data multivariate? Default is \code{FALSE}}
+\item{is.multivar}{Is the data multivariate? Default is \code{FALSE}}
+\item{alternative}{Conduct a one-tailed or a two-tailed test? Default is \code{one.tailed}}
+\item{centered}{Is the variogram centered?}
+\item{regional.mean}{Regional mean}
 \item{mult.test.corr}{Correct for multiple tests? Default is \code{FALSE}. Other options inlcude
 \code{holm}, \code{hochberg}, \code{sidak}, and \code{bonferroni}
 }
@@ -50,6 +55,7 @@ Returns a named list containing the following variables:
 \item{pvals }{p-values based on one-tailed test}
 \item{vario }{Variogram values in each lag/bin}
 \item{mult.test.corr }{Corrected for multiple tests?}
+\item{alternative }{One-tailed or two-tailed test?}
 }
 \author{
 Tarik C. Gouhier (tarik.gouhier@gmail.com)

@@ -1,6 +1,6 @@
 plot.vario <-
   function (x, xlab="Lag distance", ylab=NULL, ylim=NULL, 
-            xtype=c("mean.bin.dist", "bins"), rug=FALSE,
+            xtype=c("mean.bin.dist", "bins"), rug=FALSE, ci=FALSE,
             pch=21, col.sig="black", col.nonsig="black", bg.sig="black", 
             bg.nonsig="white", alpha=0.05, ...) {
     
@@ -28,7 +28,7 @@ plot.vario <-
                       h=0},
             geary = { yrange=c(0, 2.2); 
                       yname="Geary's C";
-                      h=1}
+                      h=0}
     )
     
     if (xtype=="mean.bin.dist")
@@ -39,8 +39,18 @@ plot.vario <-
       ylab=yname
     if (is.null(ylim))
       ylim=yrange
-
-    plot(xvals, x$vario, xlab=xlab, ylab=ylab, ylim=ylim, col=col.sig, ...)
+    
+    if (ci) {
+      plot(xvals, x$vario, xlab=xlab, ylab=ylab, ylim=ylim, col=col.sig, type="n")
+      ci.vals=apply(x$rands, 2, quantile, c(alpha/2, 1-alpha/2))
+      polygon (c(xvals, rev(xvals)), 
+               c(ci.vals[1,], rev(ci.vals[2,])), col="lightgray")
+      points(xvals, x$vario, xlab=xlab, ylab=ylab, ylim=ylim, col=col.sig, ...)
+    }
+    else {
+      plot(xvals, x$vario, xlab=xlab, ylab=ylab, ylim=ylim, col=col.sig, ...)
+    }
+    
     if (length(x$pvals) == 1 | is.na(x$pvals[1]))
       points (xvals, x$vario, xlab=xlab, ylab=ylab, type="p", ylim=ylim, pch=pch, bg=bg.nonsig, 
               col=col.nonsig)
@@ -48,8 +58,13 @@ plot.vario <-
       points(xvals[x$pvals >= alpha], x$vario[x$pvals >= alpha], bg=bg.nonsig, pch=pch, col=col.nonsig)
       points(xvals[x$pvals < alpha], x$vario[x$pvals < alpha], bg=bg.sig, pch=pch, col=col.sig)
     }  
-    if (!is.na(h))
-      abline(h=h, lty=2)
+    if (!is.na(h)) {
+      if (x$centered)
+        hv=h
+      else
+        hv=x$regional.mean
+      abline(h=hv, lty=2)
+    }
     
     if (rug)
       rug(jitter(rep(xvals, x$npoints)))

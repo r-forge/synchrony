@@ -1,9 +1,10 @@
 vario <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, centered=FALSE,
                        nrands=0, 
-                       type=c("semivar", "cov", 
-                              "pearson", "spearman", "kendall", "moran", "geary"),
-                       mult.test.corr=c(FALSE, "holm", "hochberg", "sidak", 
-                                        "bonferroni")) {
+                   type=c("semivar", "cov", 
+                          "pearson", "spearman", "kendall", "moran", "geary"),
+                   alternative=c("one.tailed", "two.tailed"),
+                   mult.test.corr=c(FALSE, "holm", "hochberg", "sidak", 
+                                    "bonferroni")) {
   
   if (!is.null(data2)) {
     all.dists=coord2dist(data[, 1:2], is.latlon, lower.tri=FALSE)
@@ -15,6 +16,9 @@ vario <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, cente
   ## Compute maximum distance
   max.dist=max(all.dists)
   max.extent=max.dist*extent
+
+  tails=c("one.tailed", "two.tailed")
+  alternative=match.arg(tolower(alternative), tails)
   
   types=c("semivar", "cov", "pearson", "spearman", "kendall", "moran", "geary")
   type=match.arg(tolower(type), types)
@@ -48,8 +52,10 @@ vario <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, cente
       vals=vals[row(vals)!=col(vals)]
     }
     
-    if (centered)
-      vals=vals-mean(vals, na.rm=T)
+    regional.mean=mean(vals, na.rm=TRUE)
+    if (centered) {
+      vals=vals-regional.mean
+    }
     
     vario=tapply(vals, grpdata, mean, na.rm=T)
     npoints=tapply(vals, grpdata, FUN=function (x) {length(na.omit(x))})
@@ -85,9 +91,9 @@ vario <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, cente
       bin.dist[i]=mean(all.dists[grpdata==i], na.rm=T)
       npoints[i]=NROW(x)
     }
-    
+    regional.mean=mean(vario, na.rm=TRUE)
     if (centered)
-      vario=vario-mean(vario)
+      vario=vario-regional.mean
   }
     
   bins=bins[1:(length(bins))-1]
@@ -101,16 +107,17 @@ vario <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, cente
       data=vals
     signif <- vario.signif (nrands=nrands, bins=bins, all.combs, grpdata, 
                             data, data2, type, vario, glob.mean, glob.sd, glob.N, 
-                            is.multivar, mult.test.corr)
+                            is.multivar, alternative, centered, regional.mean, mult.test.corr)
     
     results=list(bins=bins, mean.bin.dist=bin.dist, 
                  vario=vario, npoints=npoints, pvals=signif$pvals, rands=signif$rands, 
-                 metric=type, mult.test.corr=signif$mult.test.corr, is.multivar=is.multivar)
+                 metric=type, centered=centered, mult.test.corr=signif$mult.test.corr, 
+                 alternative=alternative, centered=centered, is.multivar=is.multivar, regional.mean=regional.mean)
   }
   else {
     results=list(bins=bins, mean.bin.dist=bin.dist,
-                 vario=vario, npoints=npoints, pvals=NA, rands=NA, metric=type, 
-                 mult.test.corr=NA, is.multivar=is.multivar)
+                 vario=vario, npoints=npoints, pvals=NA, rands=NA, metric=type, centered=centered,
+                 mult.test.corr=NA, alternative=alternative, is.multivar=is.multivar, regional.mean=regional.mean)
   } 
   class(results)="vario"
   return (results)

@@ -8,7 +8,7 @@ Plot \code{vario} objects
 }
 \usage{
 \method{plot}{vario} (x, xlab = "Lag distance", ylab = NULL, ylim = NULL,
-                      xtype = c("mean.bin.dist", "bins"), rug = FALSE,
+                      xtype = c("mean.bin.dist", "bins"), rug = FALSE, ci = FALSE,
                       pch = 21, col.sig="black", col.nonsig="black", bg.sig="black", 
                       bg.nonsig="white", alpha = 0.05, \dots)
 }
@@ -32,6 +32,9 @@ Default is \code{mean.bin.dist}
 }
 \item{rug}{
 Plot rug indicating the density of data points? Default is \code{FALSE}
+}
+\item{ci}{
+Plot two-tailed (1-\eqn{alpha})\% confidence intervals? Default is \code{FALSE}
 }
   \item{pch}{
 Type of points to use when plotting the variogram. Default is 21

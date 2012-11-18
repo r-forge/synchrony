@@ -1,9 +1,17 @@
-correlated.matrix <- function (rho = 0, sigma=1, mu=0, ntimes = 200, nspecies = 10) {
-  U=matrix(rho, nrow=nspecies, ncol=nspecies)
-  diag(U)=1
+correlated.matrix <- function (rho = 0, sigma = 1, mu = 0, ntimes = 200, nspecies = 10) {
+  
+  if (length(rho) > 1) {
+    corr.mat=matrix(NA, nrow=nspecies, ncol=nspecies)
+    corr.mat[upper.tri(corr.mat)]=rho
+    corr.mat[lower.tri(corr.mat)]=corr.mat[upper.tri(corr.mat)]
+  }
+  else {
+    corr.mat=matrix(rho, nrow=nspecies, ncol=nspecies)
+  }
+  diag(corr.mat)=1
   # Cholesky decomposition
-  A=chol(U)
-  community=matrix(rnorm(ntimes*nspecies, sd=1, mean=0), nrow=ntimes, ncol=nspecies) %*%A
+  L=chol(corr.mat)
+  community=matrix(rnorm(ntimes*nspecies, sd=1, mean=0), nrow=ntimes, ncol=nspecies) %*% L
   community=scale(community, center=TRUE, scale=TRUE)*sigma+mu
   attr(community, "scaled:center")=NULL
   attr(community, "scaled:scale")=NULL

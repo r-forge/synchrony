@@ -6,9 +6,11 @@ vario
 \description{
 Compute the empirical variogram
 }
-\usage{vario (nbins = 20, extent = 0.5, data, data2 = NULL, is.latlon = TRUE, centered = FALSE,
-                  nrands = 0, type = c("semivar", "cov", "pearson", 
+\usage{vario (nbins = 20, extent = 0.5, data, data2 = NULL, is.latlon = TRUE, 
+                  centered = FALSE, nrands = 0, 
+                  type = c("semivar", "cov", "pearson", 
                   "spearman", "kendall", "moran", "geary"),
+                  alternative = c("one.tailed", "two.tailed"),
                   mult.test.corr = c(FALSE, "holm", "hochberg", "sidak", "bonferroni"))
 }
 
@@ -35,7 +37,7 @@ Compute the empirical variogram
 }
 
 \item{centered}{Should the variogram be centered by subtracting the regional mean
-from the value in each bin? Default is \code{FALSE}
+from each value? If centered, the regional mean is zero. Default is \code{FALSE}
 }
 \item{nrands}{Number of randomizations to determine statistical significance 
   of variogram. Default is 0.
@@ -45,6 +47,11 @@ from the value in each bin? Default is \code{FALSE}
 correlation, \code{spearman} for Spearman correlation, \code{kendall} for Kendall correlation,
 \code{moran} for Moran's I, and \code{geary} for Geary's C
 }
+\item{alternative}{Conduct a one-tailed or a two-tailed test? Note that the statistical test
+is to determine whether the local value within each lag distance is different from the regional
+mean. If the variogram is centered, the null hypothesis is that the local values are equal to zero. 
+If the variogram is not centered, the null hypothesis is that the local values are equal to the 
+regional mean. Default is \code{one.tailed}}
 \item{mult.test.corr}{Correct for multiple tests? Default is \code{FALSE}. Other options inlcude
 \code{holm}, \code{hochberg}, \code{sidak}, and \code{bonferroni}
 }
@@ -70,8 +77,11 @@ Returns a named list containing the following variables:
 \item{pvals }{p-value for each lag/bin}
 \item{rands }{\code{nrands} x \code{nbins} matrix of randomizations}
 \item{metric }{Type of variogram computed}
+\item{centered }{Centered?}
 \item{mult.test.corr }{Correct for multiple tests?}
+\item{alternative }{One-tailed or two-tailed test?}
 \item{is.multivar }{Was the analysis performed on multivariate data?}
+\item{regional.mean }{Regional mean value}
 }
 \references{
 Bjornstad, O. N., and W. Falck. 2001. Nonparametric spatial covariance functions: 
