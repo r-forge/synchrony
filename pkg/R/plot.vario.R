@@ -41,7 +41,7 @@ plot.vario <-
       ylim=yrange
     
     if (ci) {
-      plot(xvals, x$vario, xlab=xlab, ylab=ylab, ylim=ylim, col=col.sig, type="n")
+      plot(xvals, x$vario, xlab=xlab, ylab=ylab, ylim=ylim, col=col.sig, type="n", ...)
       ci.vals=apply(x$rands, 2, quantile, c(alpha/2, 1-alpha/2))
       polygon (c(xvals, rev(xvals)), 
                c(ci.vals[1,], rev(ci.vals[2,])), col="lightgray")
