@@ -37,7 +37,7 @@ Compute the empirical variogram
 }
 
 \item{centered}{Should the variogram be centered by subtracting the regional mean
-from each value? If centered, the regional mean is zero. Default is \code{FALSE}
+from each value? If so, the zero-line represents the regional mean. Default is \code{FALSE}
 }
 \item{nrands}{Number of randomizations to determine statistical significance 
   of variogram. Default is 0.
