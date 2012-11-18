@@ -26,13 +26,13 @@ vario.signif <- function (nrands=999, bins, all.combs, grpdata, data, data2=data
     }
     setTxtProgressBar(prog.bar, i)
   }
-  rands[nrands+1,]=vario
   rands=rands-rowMeans(rands, na.rm=TRUE)
   crit.val=0
   if (!centered) {
     rands=rands+regional.mean
     crit.val=regional.mean
   }
+  rands[nrands+1,]=vario
   
   if (alternative == "two.tailed") {
     pvals=apply(rands, MARGIN=2, 
