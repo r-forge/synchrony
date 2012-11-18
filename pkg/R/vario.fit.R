@@ -21,9 +21,6 @@ vario.fit <- function (vario, bins, weights=rep(1, length(vario)),
     success=TRUE
   }
   else if (type=="linear") {
-    #vario.mod=vario.lin
-    #names=c("intercept", "slope")
-    #success=TRUE
     names=c("c0", "b")
     vario.mod=try(nls(vario ~ c0+b*bins, 
                       weights=weights, 
