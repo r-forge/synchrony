@@ -4,17 +4,13 @@ community.sync <- function (comm.matrix, nrands = 0) {
   results=list()
   results$obs=community.sync.aux (comm.matrix)
   
-  if (nrands==0) {
-    results$rands=NA
-    results$pval=NA
-  }
-  else {  
+  if (nrands > 0) {
     nr=NROW(comm.matrix)
     nc=NCOL(comm.matrix)      
     prog.bar=txtProgressBar(min = 0, max = nrands, style = 3)
     results$rands=numeric(length=nrands+1)*NA
     for (i in 1:nrands) {
-      rand.mat=matrix(sample(as.numeric(comm.matrix)), nrow=nr, ncol=nc)
+      rand.mat=apply(comm.matrix, 2, sample)
       results$rands[i]=community.sync.aux(rand.mat)
       setTxtProgressBar(prog.bar, i)
     }

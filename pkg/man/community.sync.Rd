@@ -7,6 +7,8 @@ Compute community-wide synchrony and its significance via Monte Carlo randomizat
 Compute community-wide synchrony and its the significance via Monte Carlo randomizations. 
 If all species fluctuate in perfect unison, the community-wide synchrony will be 1. 
 If species undergo uncorrelated fluctuations, the community-wide synchrony will be 0.
+The Monte Carlo randomizations are performed by shuffling the columns of the community
+matrix independently.
 }
 \usage{
 community.sync (comm.matrix, nrands = 0)
@@ -33,8 +35,10 @@ across all species \eqn{\left(\sum{\sigma_{x_i}}\right)^2} such that:
 Returns a named list containing:
 
 \item{obs }{the observed community synchrony}
-\item{rands }{the community synchrony value of the \code{nrands} randomizations}
-\item{pval }{p-value of observed community synchrony}
+\item{rands }{the community synchrony value the randomizations. 
+This variable is only returned if \code{nrands > 0}.}
+\item{pval }{p-value of observed community synchrony. 
+This variable is only returned if \code{nrands > 0}.}
 }
 
 \references{

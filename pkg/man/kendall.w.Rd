@@ -26,7 +26,8 @@ the level of agreement between multiple variables. When the number of observatio
 its significance can be determined by using a \eqn{\chi^2} distribution with \eqn{df=n-1}.
 Legendre (2005) shows that the \eqn{\chi^2} test is always too conservative (low power)
 compared to the randomization test. Hence, both tests have been made available in
-this function.
+this function. The Monte Carlo randomizations are performed by shuffling the 
+columns of the community matrix independently (Legendre 2005).
 }
 \value{
 Returns a named list containing:
@@ -34,9 +35,10 @@ Returns a named list containing:
 \item{w.uncorrected }{Kendall's W uncorrected for tied ranks}
 \item{w.corrected }{Kendall's W corrected for tied ranks}
 \item{pval }{p-value of Kendall's W}
-\item{pval.rand }{p-value of Kendall's W based on randomization test}
-\item{rands }{randomizations}
 \item{spearman.corr }{Spearman's ranked correlation}
+\item{pval.rand }{p-value of Kendall's W based on randomization test. 
+This variable is only returned if \code{nrands > 0}}
+\item{rands }{randomizations. This variable is only returned if \code{nrands > 0}}
 }
 \references{
 Buonaccorsi, J. P., J. S. Elkinton, S. R. Evans, and A. M. Liebhold. 2001. 

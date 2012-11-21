@@ -11,7 +11,7 @@ kendall.w <- function (data, nrands = 0) {
     rands=numeric(length=nrands+1)
     prog.bar=txtProgressBar(min = 0, max = nrands, style = 3)
     for (i in 1:nrands) {
-      tmp=matrix(sample(data), nrow=n, ncol=M)
+      tmp=apply(data, 2, sample)
       ## Using chi^2 or W is equivalent for permutation purposes 
       rands[i]=kendall.w.aux(tmp)$w.corrected
       setTxtProgressBar(prog.bar, i)  
@@ -20,8 +20,8 @@ kendall.w <- function (data, nrands = 0) {
     p.val.rand=sum(rands >= kendall.observed$w.corrected)/(nrands+1)
     results=list(w.uncorrected=kendall.observed$w.uncorrected, 
                  w.corrected=kendall.observed$w.corrected, 
-                 pval=kendall.observed$p.val, pval.rand=p.val.rand, rands=rands,
-                 spearman.corr=kendall.observed$spearman.ranked.corr)
+                 pval=kendall.observed$pval, spearman.corr=kendall.observed$spearman.ranked.corr,
+                 pval.rand=p.val.rand, rands=rands)
   }
   return (results)
 }
@@ -45,9 +45,9 @@ kendall.w.aux <- function (data) {
   spearman.ranked.corr=(M*w.corrected-1)/(M-1)
   chisq.val=M*(n-1)*w.corrected
   ## When n is large enough (>10), chi^2_r approximated as chi^2 with df=n-1 
-  p.val=1-pchisq(chisq.val, n-1)
+  pval=1-pchisq(chisq.val, n-1)
   
   return (list(w.uncorrected=w.uncorrected, 
                w.corrected=w.corrected, 
-               pval=p.val, spearman.corr=spearman.ranked.corr))
+               pval=pval, spearman.corr=spearman.ranked.corr))
   } 

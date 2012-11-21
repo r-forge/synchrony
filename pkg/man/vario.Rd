@@ -77,10 +77,14 @@ Returns a named list containing the following variables:
 \item{metric }{Type of variogram computed}
 \item{centered }{Centered?}
 \item{regional.mean }{Regional mean value}
-\item{pvals }{p-value for each lag/bin}
-\item{rands }{\code{nrands} x \code{nbins} matrix of randomizations}
-\item{alternative }{One-tailed or two-tailed test?}
-\item{mult.test.corr }{Correct for multiple tests?}
+\item{pvals }{p-value for each lag/bin. 
+This variable is only returned if \code{nrands > 0}.}
+\item{rands }{\code{nrands} x \code{nbins} matrix of randomizations.
+This variable is only returned if \code{nrands > 0}.}
+\item{alternative }{One-tailed or two-tailed test?
+This variable is only returned if \code{nrands > 0}.}
+\item{mult.test.corr }{Correct for multiple tests?
+This variable is only returned if \code{nrands > 0}.}
 \item{is.multivar }{Was the analysis performed on multivariate data?}
 }
 \references{
