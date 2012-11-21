@@ -42,7 +42,7 @@ vario.fit <- function (vario, bins, weights=rep(1, length(vario)),
   }
   else if (type=="sill") {
     names=c("c0", "c1", "a", "b")
-    vario.mod=try(nls(vario ~ (bins < a)*(c0+b*bins) + (bins >=a)*(c0+c1), 
+    vario.mod=try(nls(vario ~ (bins <= a)*(c0+b*bins) + (bins > a)*(c0+c1), 
                       weights=weights, 
                       lower=c(c0=0, c1=0, a=0, b=-Inf),
                       algorithm="port",                      
@@ -66,7 +66,7 @@ vario.fit <- function (vario, bins, weights=rep(1, length(vario)),
   }
   else if (type=="exponential") {
     names=c("c0", "c1", "a")
-    vario.mod=try(nls(vario ~ c0+c1*(1-exp(bins/a)),
+    vario.mod=try(nls(vario ~ c0+c1*(1-exp(-bins/a)),
                       weights=weights, 
                       lower=c(c0=0, c1=0, a=0),
                       algorithm="port",
@@ -205,7 +205,7 @@ vario.stats <- function (data, opt, type, names, success) {
       fit=opt$par["c0"]+opt$par["b"]*bins
     }
     else if (type=="exponential") {
-      fit=opt$par["c0"]+opt$par["c1"]*(1-exp(bins/opt$par["a"]))
+      fit=opt$par["c0"]+opt$par["c1"]*(1-exp(-bins/opt$par["a"]))
     }
     else if (type=="spherical") {
       fit=ifelse (bins < opt$par["a"],
@@ -254,7 +254,7 @@ rmse.hole <- function (x, weights, data) {
   c0=x[1]; c1=x[2]; a=x[3]
   vario=data$vario; bins=data$bins
   
-  if (a >= 0 & a < max(bins) & c0 >= 0 & c1 >= 0) {
+  if (a >= 0 & a <= max(bins) & c0 >= 0 & c1 >= 0) {
     variohat=c0+c1*(1-(a*sin(bins/a))/bins)
     rmse=sqrt(weighted.mean((vario-variohat)^2, weights))
   }
@@ -266,8 +266,8 @@ rmse.sill <- function (x, weights, data) {
   c0=x[1]; c1=x[2]; a=x[3]; b=x[4]
   vario=data$vario; bins=data$bins
   
-  if (a < max(bins) & a >= 0 & b >= 0 & c1 >= 0 & c0 >= 0) {
-    variohat=ifelse (bins < a, 
+  if (a <= max(bins) & a >= 0 & b >= 0 & c1 >= 0 & c0 >= 0) {
+    variohat=ifelse (bins <= a, 
                      c0+b*bins, 
                      c0+c1)
     rmse=sqrt(weighted.mean((vario-variohat)^2, weights))
@@ -280,8 +280,8 @@ rmse.expo <- function (x, weights, data) {
   c0=x[1]; c1=x[2]; a=x[3]
   vario=data$vario; bins=data$bins
   
-  if (a < max(bins) & a >= 0 & c1 >= 0 & c0 >= 0) {
-    variohat=c0+c1*(1-exp(bins/a))
+  if (a <= max(bins) & a >= 0 & c1 >= 0 & c0 >= 0) {
+    variohat=c0+c1*(1-exp(-bins/a))
     rmse=sqrt(weighted.mean((vario-variohat)^2, weights))
   }
   else
@@ -292,7 +292,7 @@ rmse.sphere <- function (x, weights, data) {
   c0=x[1]; c1=x[2]; a=x[3]
   vario=data$vario; bins=data$bins
   
-  if (a < max(bins) & a >= 0 & c1 >= 0 & c0 >= 0) {
+  if (a <= max(bins) & a >= 0 & c1 >= 0 & c0 >= 0) {
     variohat=ifelse (bins < a, 
                      c0+c1*(3*bins/(2*a)-0.5*(bins/a)^3), 
                      c0+c1)
@@ -306,7 +306,7 @@ rmse.gauss <- function (x, weights, data) {
   c0=x[1]; c1=x[2]; a=x[3]
   vario=data$vario; bins=data$bins
   
-  if (a < max(bins) & a >= 0 & c1 >= 0 & c0 >= 0) {
+  if (a <= max(bins) & a >= 0 & c1 >= 0 & c0 >= 0) {
     variohat=c0+c1*(1-exp(-3*bins^2/(a^2)))
     rmse=sqrt(weighted.mean((vario-variohat)^2, weights))
   }

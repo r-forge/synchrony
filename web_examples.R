@@ -1,12 +1,13 @@
 data(pisco.data)
 ## Environmental variogram
 d=subset(pisco.data, subset=year==2000, select=c("latitude", "longitude", "upwelling"))
-semiv=vario(data=d)
+semiv=vario(data=d, extent=1)
 png(file="example_semivar.png", width=800, height=600, pointsize=14)
 
 plot(semiv, xlab="Lag distance (km)")
 mod.sph=vario.fit(semiv$vario, semiv$mean.bin.dist)
-mod.exp=vario.fit(semiv$vario, semiv$mean.bin.dist, type="expo")
+mod.exp=vario.fit(semiv$vario, semiv$mean.bin.dist, type="expo", 
+                  start.vals = list(c0 = 0, c1 = 10000, a = 800, b=0.1, c=0.1))
 mod.gau=vario.fit(semiv$vario, semiv$mean.bin.dist, type="gauss")
 mod.lin=vario.fit(semiv$vario, semiv$mean.bin.dist, type="lin")
 lines(semiv$mean.bin.dist, mod.sph$fit, col="red")

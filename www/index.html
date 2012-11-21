@@ -69,7 +69,7 @@
 
             <p>The synchrony package provides tools for computing spatial, temporal, and spatiotemporal statistics in <a href="http://www.r-project.org">R</a>. All of the functions are documented in the <a href="synchrony-manual.pdf">manual</a>, so I will highlight just a few  here. One of the primary objectives of the synchrony package is to quantify how ecological and environmental patterns decay with distance. To that end, the synchrony package allows users to compute semivariograms and correlograms on univariate datasets using a suite of metrics (e.g., covariance, correlation, semivariance). Users can also fit a number of different models to empirical variograms.</p>
             <p align="center"><img src="images/example_semivar.png" alt="" width="800" height="600" /></p>
-        <p>The figure above shows how the semivariance of upwelling conditions along the West coast of the US varies with lag distance. The exponential model appears to be the best based on AIC (with the linear model following closely behind). 
+        <p>The figure above shows how the semivariance of upwelling currents along the West coast of the US varies with lag distance. The gaussian model appears to be the best based on AIC (with the spherical model following closely behind). 
             Cross-correlograms can also be used to determine the spatial relationship between two
              variables. Finally, variograms and cross-variograms can be calculated for either univariate (single observation at
               each location) or multivariate (multiple observations at each location) datasets. Multivariate correlograms have been used extensively to quantify spatial synchrony in ecology.
