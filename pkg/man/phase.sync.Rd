@@ -8,22 +8,33 @@ Compute the phase synchrony between two quasi-periodic time series by quantifyin
 their phase difference at each time step
 }
 \usage{
-phase.sync (t1, t2, mins = FALSE)
+phase.sync (t1, t2,  nrands =  0, type = 1, nbreaks = 10, mins = FALSE)
 }
 \arguments{
-  \item{t1}{
-time series 1 in matrix format (\code{n} rows x 2 columns). The first column should contain the time 
+ \item{t1}{
+time series 1 in matrix format (\code{n} rows x 2 columns). 
+The first column should contain the time 
 steps and the second column should contain the values.
 }
   \item{t2}{
-time series 2 in matrix format (\code{n} rows x 2 columns). The first column should contain the time 
+time series 2 in matrix format (\code{n} rows x 2 columns). 
+The first column should contain the time 
 steps and the second column should contain the values.
 }
-  \item{mins}{
-use local minima instead of local maxima to compute and then interpolate the phase. Default is
+  \item{nrands}{
+number of randomizations to perform (default is 0)  
+}
+  \item{type}{flag to indicate whether to compute phase difference modulus \eqn{2\pi} 
+  between 0 and \eqn{2\pi} (\code{type=1}) or phase difference modulus 
+  \eqn{2\pi} between \eqn{-\pi} and \eqn{\pi}. Default is \code{1}.
+  } 
+  \item{nbreaks}{number of bins to use to group the values in the time series.
+  Default is \code{10}.
+  }
+     \item{mins}{
+use local minima instead of local maxima to compute and the interpolate the phase. Default is
 \code{FALSE}.
 }
-
 }
 \details{
 Two time series are phase-locked if the relationship between their phases

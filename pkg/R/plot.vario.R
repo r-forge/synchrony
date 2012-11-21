@@ -51,7 +51,7 @@ plot.vario <-
       plot(xvals, x$vario, xlab=xlab, ylab=ylab, ylim=ylim, col=col.sig, ...)
     }
     
-    if (length(x$pvals) == 1 | is.na(x$pvals[1]))
+    if (is.null(x$pvals))
       points (xvals, x$vario, xlab=xlab, ylab=ylab, type="p", ylim=ylim, pch=pch, bg=bg.nonsig, 
               col=col.nonsig)
     else {

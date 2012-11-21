@@ -29,7 +29,7 @@ correlation, \code{spearman} for Spearman correlation, \code{kendall} for Kendal
   Tarik C. Gouhier (tarik.gouhier@gmail.com)
 }
 \seealso{
-  \code{\link{vario}, \link{vario.signif}}
+  \code{\link{vario}}
 }
 \examples{
   ## Internal function used by vario

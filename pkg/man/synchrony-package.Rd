@@ -75,7 +75,7 @@ sync=phase.sync(t1, t2)
 hist(sync$deltaphase$mod_phase_diff_2pi)
 
 ## Compute concordant peaks
-p=peaks.signif(t1, t2)
+p=peaks(t1, t2, nrands=100)
 ## Find proportion of time steps where both time series peak together
 p$peaks
 ## Plot (null) distribution of proportion of time steps where both time
@@ -90,10 +90,8 @@ data(bird.traits)
 
 ## Community matrix for 20 species undergoing random fluctuations 
 comm.rand=matrix(runif(100), nrow=5, ncol=20)
-community.sync(comm.rand)
-community.sync.signif(comm.rand, nrands=100)$pval
+community.sync(comm.rand, nrands=10)
 ## Community matrix for 20 species undergoing synchronized fluctuations 
 comm.corr=matrix(rep(comm.rand[,1], 20), nrow=5, ncol=20)
-community.sync(comm.corr)
-community.sync.signif(comm.corr, nrands=100)$pval
+community.sync(comm.corr, nrands=10)
 }

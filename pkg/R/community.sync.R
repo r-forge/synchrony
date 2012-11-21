@@ -1,7 +1,31 @@
 ## Community matrix comm.matrix: n x m matrix with n=time step, m=species
-community.sync <- function (comm.matrix) {
+community.sync <- function (comm.matrix, nrands = 0) {
+  comm.matrix=as.matrix(comm.matrix)
+  results=list()
+  results$obs=community.sync.aux (comm.matrix)
+  
+  if (nrands==0) {
+    results$rands=NA
+    results$pval=NA
+  }
+  else {  
+    nr=NROW(comm.matrix)
+    nc=NCOL(comm.matrix)      
+    prog.bar=txtProgressBar(min = 0, max = nrands, style = 3)
+    results$rands=numeric(length=nrands+1)*NA
+    for (i in 1:nrands) {
+      rand.mat=matrix(sample(as.numeric(comm.matrix)), nrow=nr, ncol=nc)
+      results$rands[i]=community.sync.aux(rand.mat)
+      setTxtProgressBar(prog.bar, i)
+    }
+    results$rands[nrands+1]=results$obs
+    results$pval=sum(results$rands >= results$obs)/(nrands+1)
+  }
+  return (results)
+}
+
+community.sync.aux <- function (comm.matrix) {
   species.sd=apply(comm.matrix, MARGIN=2, FUN=sd)
   community.var=var(rowSums(comm.matrix))
-  sync=community.var/sum(species.sd, na.rm=TRUE)^2
-  return (sync)
+  return(community.var/sum(species.sd, na.rm=TRUE)^2)
 }

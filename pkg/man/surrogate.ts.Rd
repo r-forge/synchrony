@@ -50,7 +50,7 @@ Tarik C. Gouhier (tarik.gouhier@gmail.com)
 }
 
 \seealso{
-\code{\link{phase.sync.signif}}
+\code{\link{phase.sync}}
 
 }
 \examples{

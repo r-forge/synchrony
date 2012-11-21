@@ -1,8 +1,8 @@
 find.minmax <- function (timeseries) {
   ## Find local maxima
-  max.index <- find.minmax.ind (timeseries)
+  max.index <- find.minmax.aux (timeseries)
   ## Find local minima
-  min.index <- find.minmax.ind (timeseries, mins=TRUE)
+  min.index <- find.minmax.aux (timeseries, mins=TRUE)
   
   mins=as.data.frame(timeseries[min.index,])
   maxs=as.data.frame(timeseries[max.index,])
@@ -19,4 +19,16 @@ find.minmax <- function (timeseries) {
   rownames(maxs)=1:NROW(maxs)
 
   return (list(mins=mins, maxs=maxs))
+}
+
+find.minmax.aux <- function (timeseries, mins=FALSE) {
+  if (mins)
+    ind <- diff(c(Inf, timeseries[,2])) < 0
+  else
+    ind <- diff(c(-Inf, timeseries[,2])) > 0
+  ind <- cumsum(rle(ind)$lengths)
+  ind <- ind[seq.int(1, length(ind), 2)]
+  ## First and last point cannot be local min/max
+  ind = ind[!(ind %in% c(1, NROW(timeseries)))]
+  return (ind)
 }

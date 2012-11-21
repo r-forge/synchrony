@@ -52,7 +52,7 @@ Root Mean Square Error (RMSE).
 Tarik C. Gouhier (tarik.gouhier@gmail.com)
 }
 \seealso{
-\code{\link{vario.signif}, \link{vario}, \link{vario.func}}
+\code{\link{vario}, \link{vario.func}}
 }
 \examples{
 ## Load data

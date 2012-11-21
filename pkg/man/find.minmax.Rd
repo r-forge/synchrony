@@ -26,10 +26,6 @@ Returns a list containing:
 Tarik C. Gouhier (tarik.gouhier@gmail.com)
 }
 
-\seealso{
-\code{\link{find.minmax.ind}}
-}
-
 \examples{
 t1=cbind(1:100, runif(100))
 min.max=find.minmax(t1)

@@ -4,14 +4,14 @@
 vario
 }
 \description{
-Compute the empirical variogram
+Compute the empirical variogram and determine its significance via Monte Carlo randomizations
 }
 \usage{vario (nbins = 20, extent = 0.5, data, data2 = NULL, is.latlon = TRUE, 
                   centered = FALSE, nrands = 0, 
                   type = c("semivar", "cov", "pearson", 
                   "spearman", "kendall", "moran", "geary"),
                   alternative = c("one.tailed", "two.tailed"),
-                  mult.test.corr = c(FALSE, "holm", "hochberg", "sidak", "bonferroni"))
+                  mult.test.corr = c("none", "holm", "hochberg", "sidak", "bonferroni"))
 }
 
 \arguments{
@@ -52,7 +52,7 @@ is to determine whether the local value within each lag distance is different fr
 mean. If the variogram is centered, the null hypothesis is that the local values are equal to zero. 
 If the variogram is not centered, the null hypothesis is that the local values are equal to the 
 regional mean. Default is \code{one.tailed}}
-\item{mult.test.corr}{Correct for multiple tests? Default is \code{FALSE}. Other options inlcude
+\item{mult.test.corr}{Correct for multiple tests? Default is \code{"none"}. Other options include
 \code{holm}, \code{hochberg}, \code{sidak}, and \code{bonferroni}
 }
 }
@@ -74,14 +74,14 @@ Returns a named list containing the following variables:
 \item{mean.bin.dist }{Mean distance of each lag/bin}
 \item{vario }{Variogram values in each lag/bin}
 \item{npoints }{Number of points in each lag/bin}
-\item{pvals }{p-value for each lag/bin}
-\item{rands }{\code{nrands} x \code{nbins} matrix of randomizations}
 \item{metric }{Type of variogram computed}
 \item{centered }{Centered?}
-\item{mult.test.corr }{Correct for multiple tests?}
-\item{alternative }{One-tailed or two-tailed test?}
-\item{is.multivar }{Was the analysis performed on multivariate data?}
 \item{regional.mean }{Regional mean value}
+\item{pvals }{p-value for each lag/bin}
+\item{rands }{\code{nrands} x \code{nbins} matrix of randomizations}
+\item{alternative }{One-tailed or two-tailed test?}
+\item{mult.test.corr }{Correct for multiple tests?}
+\item{is.multivar }{Was the analysis performed on multivariate data?}
 }
 \references{
 Bjornstad, O. N., and W. Falck. 2001. Nonparametric spatial covariance functions: 
@@ -97,7 +97,7 @@ Fortin, M. J., and M. R. T. Dale. 2005. Spatial Analysis: A Guide for Ecologists
 Tarik C. Gouhier (tarik.gouhier@gmail.com)
 }
 \seealso{
-\code{\link{vario.signif}, \link{vario.func}}
+\code{\link{vario.func}}
 }
 \examples{
 data(pisco.data)

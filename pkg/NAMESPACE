@@ -1,21 +1,16 @@
 # Export functions
 export (coord2dist,
 	correlated.matrix,
-	find.minmax.ind,
 	find.minmax,
 	kendall.w,
 	peaks,
-	peaks.signif,
 	phase.partnered,
 	phase.sync,
-	phase.sync.signif,
 	community.sync,
-	community.sync.signif,
 	surrogate.ts,
 	latlon2dist,
 	vario.fit,
 	vario,
-	vario.signif,
 	vario.func)
 
 # S3 method for plotting
