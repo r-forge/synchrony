@@ -34,7 +34,7 @@ Default is \code{mean.bin.dist}
 Plot rug indicating the density of data points? Default is \code{FALSE}
 }
 \item{ci}{
-Plot two-tailed (1-\eqn{\alpha/2})\% confidence intervals? Default is \code{FALSE}
+Plot two-tailed (1-\eqn{\alpha})\% confidence intervals? Default is \code{FALSE}
 }
   \item{pch}{
 Type of points to use when plotting the variogram. Default is 21
