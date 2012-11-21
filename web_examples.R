@@ -52,20 +52,20 @@ d.upw.wide=reshape(data=d.upw, idvar=c("latitude", "longitude"), timevar=c("year
 d.cov.wide=reshape(data=d.cov, idvar=c("latitude", "longitude"), timevar=c("year"), 
                    direction="wide")
 ## Generate variograms
-v.upw=vario(nbins=12, data=d.upw.wide, type="pearson", extent=1, nrands=999)
-v.cov=vario(nbins=12, data=d.cov.wide, type="pearson", extent=1, nrands=999)
+v.upw=vario(nbins=12, data=d.upw.wide, type="pearson", extent=1, nrands=999, alt="two", center=TRUE)
+v.cov=vario(nbins=12, data=d.cov.wide, type="pearson", extent=1, nrands=999, alt="two", center=TRUE)
 ## Fit variograms
 v.cov.per=vario.fit(v.cov$vario, v.cov$mean.bin.dist, type="period", 
                     start.vals=list(a=1, b=3, c=0))
 v.upw.lin=vario.fit(v.upw$vario, v.upw$mean.bin.dist, type="linear")
 
-png(file="example_correlation.png", width=600, height=800, pointsize=14)
+png(file="example_synchrony.png", width=600, height=800, pointsize=14)
 par(oma=c(0, 0, 0, 1), mar=c(5, 4, 2, 4) + 0.1, mfrow=c(2,1))
-plot(v.cov, xlab="Lag distance (km)", bg.sig="red", col.nonsig="red", 
-     main="Mussel cover", 
-     rug=TRUE, ylim=c(-0.3, 0.3))
+plot(v.cov, xlab="Lag distance (km)", bg.sig="red", col.nonsig="red", col.sig="red",
+     main="Mussel synchrony", ci=TRUE,
+     rug=FALSE, ylim=c(-0.3, 0.3))
 lines(v.cov$mean.bin.dist, v.cov.per$fit, col="red")
-plot(v.upw, xlab="Lag distance (km)", bg.sig="blue", col.nonsig="blue", 
-     main="Upwelling", rug=TRUE)
+plot(v.upw, xlab="Lag distance (km)", bg.sig="blue", col.nonsig="blue", col.sig="blue",
+     main="Upwelling synchrony", ci=TRUE)
 lines(v.upw$mean.bin.dist, v.upw.lin$fit, col="blue")
 dev.off()
