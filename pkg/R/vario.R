@@ -74,7 +74,6 @@ vario <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, cente
     
     colnames(rands)=names(results$bins)
     names(pvals)=names(results$bins)
-    
     results$pvals=pvals
     results$rands=rands
     results$alternative=alternative
@@ -182,6 +181,7 @@ vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE,
   names(bins)=col.names
   names(bin.dist)=col.names
   names(vario)=col.names
+  names(npoints)=col.names
   
   return (list(bins=bins, mean.bin.dist=bin.dist,
                vario=vario, npoints=npoints, metric=type, centered=centered,
