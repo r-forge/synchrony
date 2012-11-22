@@ -1,8 +1,9 @@
 ## Community matrix comm.matrix: n x m matrix with n=time step, m=species
-community.sync <- function (comm.matrix, nrands = 0) {
+community.sync <- function (comm.matrix, nrands = 0, method=c("pearson", "kendall", "spearman"), ...) {
   comm.matrix=as.matrix(comm.matrix)
   results=list()
   results$obs=community.sync.aux (comm.matrix)
+  results$meancorr=meancorr(comm.matrix, method=method, ...)$obs
   
   if (nrands > 0) {
     nr=NROW(comm.matrix)

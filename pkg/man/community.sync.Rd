@@ -8,10 +8,11 @@ Compute community-wide synchrony and its the significance via Monte Carlo random
 If all species fluctuate in perfect unison, the community-wide synchrony will be 1. 
 If species undergo uncorrelated fluctuations, the community-wide synchrony will be 0.
 The Monte Carlo randomizations are performed by shuffling the columns of the community
-matrix independently.
+matrix independently. This function also returns the mean correlation between the columns
+of the matrix.
 }
 \usage{
-community.sync (comm.matrix, nrands = 0)
+community.sync (comm.matrix, nrands = 0, method=c("pearson", "kendall", "spearman"), ...)
 }
 \arguments{
  \item{comm.matrix}{
@@ -21,8 +22,13 @@ and each column corresponds to a different species.
  \item{nrands}{
 number of randomizations to perform (default is 0)
 }
-
+\item{method}{Method to compute mean correlation between columns? 
+Options include \code{pearson}, \code{kendall}, and \code{spearman}. Default is \code{pearson}}
+\item{\dots}{
+Other parameters to \code{\link{cor}} function.
 }
+}
+
 \details{
 Loreau and de Mazancourt (2008) show that community-wide synchrony \eqn{\varphi} can be quantified
 by computing the temporal variance \eqn{\sigma_{x_T}^2} of the community time series
@@ -35,6 +41,7 @@ across all species \eqn{\left(\sum{\sigma_{x_i}}\right)^2} such that:
 Returns a named list containing:
 
 \item{obs }{the observed community synchrony}
+\item{meancorr }{the mean correlation between the columns of the matrix}
 \item{rands }{the community synchrony value the randomizations. 
 This variable is only returned if \code{nrands > 0}.}
 \item{pval }{p-value of observed community synchrony. 
