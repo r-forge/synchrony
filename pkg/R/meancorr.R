@@ -41,8 +41,6 @@ meancorr <- function (comm.matrix, nrands = 0,
 }
 
 meancorr.aux <- function (data, method=method, ...) {
-  methods=c("pearson", "kendall", "spearman")
-  method=match.arg(method, methods)
   mean.corr=suppressWarnings(cor(data, method=method, ...))
   mean.corr=mean(mean.corr[lower.tri(mean.corr)], na.rm=TRUE)
   return (mean.corr)
