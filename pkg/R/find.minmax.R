@@ -4,18 +4,15 @@ find.minmax <- function (timeseries) {
   ## Find local minima
   min.index <- find.minmax.aux (timeseries, mins=TRUE)
   
-  mins=as.data.frame(timeseries[min.index,])
-  maxs=as.data.frame(timeseries[max.index,])
+  mins=data.frame(index=min.index, time=timeseries[min.index,1], val=timeseries[min.index,2])
+  maxs=data.frame(index=max.index, time=timeseries[max.index,1], val=timeseries[max.index,2])
   
   if (NCOL(mins)==1)
     mins=t(mins)
   if (NCOL(maxs)==1)
     maxs=t(maxs)
   
-  col.names=c("location", "val")
-  colnames(mins)=col.names
   rownames(mins)=1:NROW(mins)
-  colnames(maxs)=col.names
   rownames(maxs)=1:NROW(maxs)
 
   return (list(mins=mins, maxs=maxs))

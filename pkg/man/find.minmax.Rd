@@ -17,10 +17,10 @@ steps and the second column should contain the values.
 }
 
 \value{
-Returns a list containing:
+Returns a named list containing:
 
-\item{mins }{\code{n} x 2 matrix containing the time steps and the local min values}
-\item{maxs }{\code{n} x 2 matrix containing the time steps and the local max values}
+\item{mins }{\code{n} x 3 matrix containing the index, time steps, and the local min values}
+\item{maxs }{\code{n} x 3 matrix containing the index, time steps, and the local max values}
 }
 \author{
 Tarik C. Gouhier (tarik.gouhier@gmail.com)

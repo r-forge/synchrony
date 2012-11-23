@@ -86,8 +86,8 @@ phase.sync.aux <- function (t1, t2, mins = FALSE) {
     v2=min.max2$maxs
   }
   ## Locations of mins/maxs
-  locs1=v1$location
-  locs2=v2$location
+  locs1=v1$index
+  locs2=v2$index
   ## Range of values over which to interpolate
   range1=locs1[1]:locs1[length(locs1)]
   range2=locs2[1]:locs2[length(locs2)]
