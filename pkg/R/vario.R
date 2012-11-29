@@ -90,7 +90,8 @@ vario <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, cente
 
 vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, 
                        centered=FALSE, is.multivar=FALSE,
-                       type=c("semivar", "cov", "pearson", "spearman", "kendall", "moran", "geary")) {
+                       type=c("semivar", "cov", "pearson", "spearman", "kendall", 
+                              "moran", "geary")) {
   
   n.cols=NCOL(data)
   all.dists=coord2dist(data[, 1:2], is.latlon)
@@ -170,7 +171,8 @@ vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE,
       
       tmp=tmp[complete.cases(tmp),]
       x=data[tmp[,1], 3:n.cols]
-      y=data2[tmp[,2], 3:n.cols]
+      y=data2[tmp[,2], 3:n.cols]    
+      z=vario.func(x, y, glob.mean, glob.sd, glob.N, is.multivar, type=type)
       vario[i]=vario.func(x, y, glob.mean, glob.sd, glob.N, is.multivar, type=type)
       bin.dist[i]=mean(all.dists[grpdata==i], na.rm=T)
       npoints[i]=NROW(x)/denom.N
