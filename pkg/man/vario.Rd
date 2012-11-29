@@ -73,9 +73,9 @@ Returns a named list containing the following variables:
 \item{bins }{Center of each lag/bin}
 \item{mean.bin.dist }{Mean distance of each lag/bin}
 \item{vario }{Variogram values in each lag/bin}
-\item{npoints }{Number of points in each lag/bin}
+\item{npoints }{Number of pairs of points in each lag/bin}
 \item{metric }{Type of variogram computed}
-\item{centered }{Centered?}
+\item{centered }{Is the variogram centered?}
 \item{regional.mean }{Regional mean value}
 \item{pvals }{p-value for each lag/bin. 
 This variable is only returned if \code{nrands > 0}.}

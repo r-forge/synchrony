@@ -93,23 +93,21 @@ vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE,
                        type=c("semivar", "cov", "pearson", "spearman", "kendall", "moran", "geary")) {
   
   n.cols=NCOL(data)
-  
-  if (!is.null(data2)) {
-    all.dists=coord2dist(data[, 1:2], is.latlon, lower.tri=FALSE)
-    all.dists=all.dists[row(all.dists)!=col(all.dists)]
-  }
-  else
-    all.dists=coord2dist(data[, 1:2], is.latlon)
-  
+  all.dists=coord2dist(data[, 1:2], is.latlon)
   ## Compute maximum distance
   max.dist=max(all.dists)
   max.extent=max.dist*extent
+  
+  if (!is.null(data2))
+    include.lag0=TRUE
+  else
+    include.lag0=FALSE
   
   types=c("semivar", "cov", "pearson", "spearman", "kendall", "moran", "geary")
   type=match.arg(tolower(type), types)
   
   bins=seq(0, max.extent, length.out=nbins+1)
-  grpdata<-cut(all.dists, breaks=bins+1, labels=1:(length(bins)-1))  
+  grpdata <-cut(all.dists, breaks=bins+1, labels=1:(length(bins)-1))  
   if (is.multivar) {
     glob.mean=NA
     glob.sd=NA
@@ -146,30 +144,34 @@ vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE,
     vario=numeric(length(bins)-1)*NA
     npoints=numeric(length(bins)-1)*NA
     
+    all.combs=t(combn(NROW(data), 2))
     if (!is.null(data2)) {
-      all.combs=expand.grid(1:NROW(data), 1:NROW(data2))
-      ## Exclude diagonal elements
-      all.combs=all.combs[all.combs[,1]!=all.combs[,2], ]
       glob.mean=c(mean(data[,3], na.rm=TRUE), mean(data2[,3], na.rm=TRUE))
       glob.sd=c(sd(data[,3], na.rm=TRUE), sd(data2[,3], na.rm=TRUE))
       glob.N=NROW(data[,3])
+      all.combs=cbind(all.combs, all.combs[, c(2, 1)])
+      ## Control for the fact that including lag0 means pairs are of sites are
+      ## counted twice
+      denom.N=2
     }
     else {
       data2=data
-      all.combs=t(combn(NROW(data), 2))
       glob.mean=mean(data[,3], na.rm=TRUE)
       glob.sd=sd(data[,3], na.rm=TRUE)
-      glob.N=NROW(data[,3])          
+      glob.N=NROW(data[,3])
+      denom.N=1  
     }
     for (i in 1:(length(bins)-1)) {
       tmp=all.combs[grpdata==i,]
+      if (include.lag0) {
+        tmp=rbind(all.combs[grpdata==i, 1:2], all.combs[grpdata==i, c(3, 4)])
+      }
       tmp=tmp[complete.cases(tmp),]
       x=data[tmp[,1], 3:n.cols]
       y=data2[tmp[,2], 3:n.cols]
-      
       vario[i]=vario.func(x, y, glob.mean, glob.sd, glob.N, is.multivar, type=type)
       bin.dist[i]=mean(all.dists[grpdata==i], na.rm=T)
-      npoints[i]=NROW(x)
+      npoints[i]=NROW(x)/denom.N
     }
     regional.mean=mean(vario, na.rm=TRUE)
     if (centered)
