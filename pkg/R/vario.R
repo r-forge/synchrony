@@ -162,10 +162,12 @@ vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE,
       denom.N=1  
     }
     for (i in 1:(length(bins)-1)) {
-      tmp=all.combs[grpdata==i,]
       if (include.lag0) {
         tmp=rbind(all.combs[grpdata==i, 1:2], all.combs[grpdata==i, c(3, 4)])
       }
+      else
+        tmp=all.combs[grpdata==i, 1:2]
+      
       tmp=tmp[complete.cases(tmp),]
       x=data[tmp[,1], 3:n.cols]
       y=data2[tmp[,2], 3:n.cols]
