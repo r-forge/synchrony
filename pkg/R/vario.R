@@ -157,8 +157,8 @@ vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE,
     }
     else {
       data2=data
-      glob.mean=mean(data[,3], na.rm=TRUE)
-      glob.sd=sd(data[,3], na.rm=TRUE)
+      glob.mean=rep(mean(data[,3], na.rm=TRUE), 2)
+      glob.sd=rep(sd(data[,3], na.rm=TRUE), 2)
       glob.N=NROW(data[,3])
       denom.N=1  
     }

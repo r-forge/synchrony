@@ -7,13 +7,13 @@ vario.func <- function (x, y, glob.mean, glob.sd, glob.N, is.multivar=FALSE,
     if (type=="semivar")
       results=(1/(2*length(x)))*sum((x-y)^2)
     else if (type=="cov")
-      results=(1/length(x))*(sum((x-glob.mean[1])*(y-glob.mean[length(glob.mean)])))
+      results=(1/length(x))*(sum((x-glob.mean[1])*(y-glob.mean[2])))
     else if (type=="moran") {
-      results=(1/length(x))*(sum((x-glob.mean[1])*(y-glob.mean[length(glob.mean)])))/
-        (glob.sd[1]*glob.sd[length(glob.sd)])
+      results=(1/length(x))*(sum((x-glob.mean[1])*(y-glob.mean[2])))/
+        (glob.sd[1]*glob.sd[2])
     }
     else if (type=="geary") {
-      results=((1/(2*length(x)))*(sum((x-y)^2)))/((1/(glob.N-1))*(glob.sd[1]*glob.sd[length(glob.sd)]*glob.N))
+      results=((1/(2*length(x)))*(sum((x-y)^2)))/((1/(glob.N-1))*(glob.sd[1]*glob.sd[2]*glob.N))
     }
     else{
       stop("Error: variogram type must be one of semivar, cov, geary, or moran for univariate datasets")
