@@ -21,10 +21,10 @@ vario.func <- function (x, y, glob.mean, glob.sd, glob.N, is.multivar=FALSE,
   }
   else {
     if (type=="cov") {
-      results=cov(x, y)
+      results=cov(x, y, use = "pairwise.complete.obs")
     }
     else if (type %in% c("pearson", "spearman", "kendall")) {
-      results=mean(cor(t(cbind(x, y)), method=type))
+      results=mean(cor(t(cbind(x, y)), method=type, use = "pairwise.complete.obs"))
     }
     else {
       stop("Error: variogram type must be cov, pearson, spearman, or kendall for multivariate datasets")

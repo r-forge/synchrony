@@ -119,15 +119,15 @@ vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE,
       if (type=="cov")
         vals=cov(t(data[, 3:n.cols]))
       else {
-        vals<-cor(t(data[, 3:n.cols]), method=type)
+        vals<-cor(t(data[, 3:n.cols]), method=type, use = "pairwise.complete.obs")
       }
       vals=vals[lower.tri(vals)]
     }
     else {
       if (type=="cov")
-        vals=cov(x=t(data[, 3:n.cols]), y=t(data2[, 3:n.cols]))
+        vals=cov(x=t(data[, 3:n.cols]), y=t(data2[, 3:n.cols]), use = "pairwise.complete.obs")
       else
-        vals=cor(x=t(data[, 3:n.cols]), y=t(data2[, 3:n.cols]), method=type)
+        vals=cor(x=t(data[, 3:n.cols]), y=t(data2[, 3:n.cols]), method=type, use = "pairwise.complete.obs")
       vals=vals[row(vals)!=col(vals)]
     }
     
