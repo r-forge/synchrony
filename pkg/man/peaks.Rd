@@ -30,7 +30,7 @@ Returns a named list containing:
 \item{pval }{p-value computed by randomly shuffling both time series \code{nrands} times}
 \item{rands }{proportion of local minima/maxima common to both time series for each randomization}
 \item{peaks }{proportion of local minima/maxima common to both time series in the observed dataset}
-\item{locations }{locations/indices of local minima/maxima common to both time series in the observed dataset}
+\item{index }{indices of local minima/maxima common to both time series in the observed dataset}
 }
 \references{
 Buonaccorsi, J. P., J. S. Elkinton, S. R. Evans, and A. M. Liebhold. 2001. 
