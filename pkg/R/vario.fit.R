@@ -225,7 +225,7 @@ vario.stats <- function (data, opt, type, names, success) {
     }    
   }
   
-  mod.aic=N*log(rmse^2)+2*(length(params)+1)
+  mod.aic=N*log(rmse^2)+2*(length(params))
   names(params)=names
   return (list(AIC=mod.aic, rmse=rmse, params=params, fit=fit, nls.success=success))
 } 
