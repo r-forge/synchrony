@@ -33,7 +33,7 @@ Return a named list containing the following variables:
 
 \item{vario }{Empirical variogram values}
 \item{bins }{Empirical variogram bins/lag distances}
-\item{AIC }{AIC score of the model fit: \eqn{AIC=n\times log\left(\frac{SSE}{n}\right)+2\times(p+1)}
+\item{AIC }{AIC score of the model fit: \eqn{AIC=nlog\left(\frac{SSE}{n}\right)+2p}
  where \eqn{n} is the number of points in the variogram, \eqn{SSE=\sum{(\hat{x}_{i}-x_{i}})^2},
  and \eqn{p} is the number of parameters}
 \item{RMSE }{Root Mean Square Error of the model fit: \eqn{\sqrt{\frac{SSE}{n}}}}
