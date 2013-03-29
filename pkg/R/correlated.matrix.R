@@ -10,11 +10,17 @@ correlated.matrix <- function (rho = 0, sigma = 1, mu = 0, ntimes = 200, nspecie
   }
   diag(corr.mat)=1
   # Cholesky decomposition
-  L=chol(corr.mat)
-  community=matrix(rnorm(ntimes*nspecies, sd=1, mean=0), nrow=ntimes, ncol=nspecies) %*% L
-  community=scale(community, center=TRUE, scale=TRUE)*sigma+mu
-  attr(community, "scaled:center")=NULL
-  attr(community, "scaled:scale")=NULL
+  L=try(chol(corr.mat))
+  if (class(L)!="try-error") {
+    community=matrix(rnorm(ntimes*nspecies, sd=1, mean=0), nrow=ntimes, ncol=nspecies) %*% L
+    community=scale(community, center=TRUE, scale=TRUE)*sigma+mu
+    attr(community, "scaled:center")=NULL
+    attr(community, "scaled:scale")=NULL
+  }
+  else {
+    community=NA
+    warning("Unable to generate desired correlation matrix (leading minor is not positive definite)")
+  }
   
   results=list(rho=rho, sigma=sigma, mu=mu, community=community)
   return (results)  
