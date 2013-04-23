@@ -10,7 +10,8 @@ Fit model to the empirical variogram
                        type = c("spherical", "gaussian", "nugget", "linear", 
                        "exponential", "sill", "periodic", "hole"),
                        start.vals = list(c0 = 0, c1 = max(vario), 
-                                          a = max(bins)/4, b=0.1, c=0.1)) 
+                                          a = max(bins)/4, b=0.1, c=0.1),
+                       control=list(maxit=10000)) 
 }
 
 \arguments{
@@ -27,6 +28,8 @@ Fit model to the empirical variogram
 \item{start.vals}{Named list containing the start values for the variogram model: 
 \code{c0}: nugget, \code{c1}: sill, \code{a}: spatial range; \code{b}: slope; 
 \code{c}: frequency}
+  \item{control}{optional parameter for the \code{optim} function. 
+  See \code{?optim} for details}
 }
 \value{
 Return a named list containing the following variables:
@@ -40,6 +43,7 @@ Return a named list containing the following variables:
 \item{params }{Named list containing the best model parameter estimates}
 \item{fit }{Predicted variogram values from the model fit}
 \item{nls.success }{did \code{nls} succeed?}
+\item{convergence }{did \code{nls} or \code{optim} converge?}
 }
 \note{
 Selecting proper initial values is critical for fitting a reasonable model to the 
