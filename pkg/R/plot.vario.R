@@ -59,7 +59,7 @@ plot.vario <-
       points(xvals[x$pvals < alpha], x$vario[x$pvals < alpha], bg=bg.sig, pch=pch, col=col.sig)
     }  
     if (!is.na(h)) {
-      if (x$centered)
+      if (x$is.centered)
         hv=h
       else
         hv=x$regional.mean

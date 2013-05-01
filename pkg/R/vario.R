@@ -1,6 +1,7 @@
-vario <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, centered=FALSE,
-                   nrands=0, type=c("semivar", "cov", 
-                                    "pearson", "spearman", "kendall", "moran", "geary"),
+vario <- function (n.bins=20, size.bins=NULL, extent=0.5, data, data2=NULL, 
+                   is.latlon=TRUE, is.centered=FALSE, nrands=0,
+                   type=c("semivar", "cov", 
+                          "pearson", "spearman", "kendall", "moran", "geary"),
                    alternative=c("one.tailed", "two.tailed"),
                    mult.test.corr=c("none", "holm", "hochberg", "sidak", 
                                     "bonferroni")) {
@@ -20,8 +21,11 @@ vario <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, cente
   else
     is.multivar=FALSE
   
-  results=vario.aux (nbins=nbins, extent=extent, data=data, data2=data2, 
-                     is.latlon=is.latlon, centered=centered, 
+  if (!is.null(size.bins))
+    n.bins=NULL
+  
+  results=vario.aux (n.bins=n.bins, size.bins=size.bins, extent=extent, data=data, data2=data2, 
+                     is.latlon=is.latlon, is.centered=is.centered, 
                      is.multivar=is.multivar, type=type)
   
   if (nrands > 0) {
@@ -49,7 +53,7 @@ vario <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, cente
     }
     rands=rands-rowMeans(rands, na.rm=TRUE)
     crit.val=0
-    if (!centered) {
+    if (!is.centered) {
       rands=rands+results$regional.mean
       crit.val=results$regional.mean
     }
@@ -88,8 +92,8 @@ vario <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, cente
   return(results)
 }
 
-vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE, 
-                       centered=FALSE, is.multivar=FALSE,
+vario.aux <- function (n.bins=20, size.bins=NULL, extent=0.5, data, data2=NULL, is.latlon=TRUE, 
+                       is.centered=FALSE, is.multivar=FALSE,
                        type=c("semivar", "cov", "pearson", "spearman", "kendall", 
                               "moran", "geary")) {
   
@@ -106,9 +110,14 @@ vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE,
   
   types=c("semivar", "cov", "pearson", "spearman", "kendall", "moran", "geary")
   type=match.arg(tolower(type), types)
-  
-  bins=seq(0, max.extent, length.out=nbins+1)
-  grpdata <-cut(all.dists, breaks=bins+1, labels=1:(length(bins)-1))  
+  if (is.null(size.bins)) {
+    bins=seq(0, max.extent, length.out=n.bins+1)
+    grpdata <-cut(all.dists, breaks=bins, labels=1:(length(bins)-1), right=TRUE)
+  }
+  else {
+    bins=seq(0, max.extent+size.bins, by=size.bins)
+    grpdata <-cut(all.dists, breaks=bins, labels=1:(length(bins)-1), right=FALSE)
+  }
   if (is.multivar) {
     glob.mean=NA
     glob.sd=NA
@@ -132,7 +141,7 @@ vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE,
     }
     
     regional.mean=mean(vals, na.rm=TRUE)
-    if (centered) {
+    if (is.centered) {
       vals=vals-regional.mean
     }
     vario=tapply(vals, grpdata, mean, na.rm=T)
@@ -151,7 +160,7 @@ vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE,
       glob.sd=c(sd(data[,3], na.rm=TRUE), sd(data2[,3], na.rm=TRUE))
       glob.N=NROW(data[,3])
       all.combs=cbind(all.combs, all.combs[, c(2, 1)])
-      ## Control for the fact that including lag0 means pairs are of sites are
+      ## Control for the fact that including lag0 means pairs of sites are
       ## counted twice
       denom.N=2
     }
@@ -168,17 +177,23 @@ vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE,
       }
       else
         tmp=all.combs[grpdata==i, 1:2]
-      
       tmp=tmp[complete.cases(tmp),]
-      x=data[tmp[,1], 3:n.cols]
-      y=data2[tmp[,2], 3:n.cols]    
-      z=vario.func(x, y, glob.mean, glob.sd, glob.N, is.multivar, type=type)
-      vario[i]=vario.func(x, y, glob.mean, glob.sd, glob.N, is.multivar, type=type)
-      bin.dist[i]=mean(all.dists[grpdata==i], na.rm=T)
-      npoints[i]=NROW(x)/denom.N
+      # produce NAs when there are no pairs of points in a bin
+      if (!is.null(dim(tmp)) & length(tmp)>0) {
+        x=data[tmp[,1], 3:n.cols]
+        y=data2[tmp[,2], 3:n.cols]    
+        npoints[i]=NROW(x)/denom.N
+        vario[i]=vario.func(x, y, glob.mean, glob.sd, glob.N, is.multivar, type=type)        
+        bin.dist[i]=mean(all.dists[grpdata==i], na.rm=T)
+      }
+      else {
+        vario[i]=NA
+        npoints[i]=length(tmp)/denom.N
+        bin.dist[i]=NA
+      }
     }
     regional.mean=mean(vario, na.rm=TRUE)
-    if (centered)
+    if (is.centered)
       vario=vario-regional.mean
   }
   
@@ -190,7 +205,7 @@ vario.aux <- function (nbins=20, extent=0.5, data, data2=NULL, is.latlon=TRUE,
   names(npoints)=col.names
   
   return (list(bins=bins, mean.bin.dist=bin.dist,
-               vario=vario, npoints=npoints, metric=type, centered=centered,
+               vario=vario, npoints=npoints, metric=type, is.centered=is.centered,
                regional.mean=regional.mean, all.combs=all.combs, grpdata=grpdata, 
                glob.mean=glob.mean, glob.sd=glob.sd, glob.N=glob.N, vals=vals))
 }

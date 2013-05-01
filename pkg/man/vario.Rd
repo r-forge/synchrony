@@ -6,8 +6,8 @@ vario
 \description{
 Compute the empirical variogram and determine its significance via Monte Carlo randomizations
 }
-\usage{vario (nbins = 20, extent = 0.5, data, data2 = NULL, is.latlon = TRUE, 
-                  centered = FALSE, nrands = 0, 
+\usage{vario (n.bins = 20, size.bins = NULL, extent = 0.5, data, data2 = NULL, 
+                  is.latlon = TRUE, is.centered = FALSE, nrands = 0, 
                   type = c("semivar", "cov", "pearson", 
                   "spearman", "kendall", "moran", "geary"),
                   alternative = c("one.tailed", "two.tailed"),
@@ -15,8 +15,11 @@ Compute the empirical variogram and determine its significance via Monte Carlo r
 }
 
 \arguments{
-  \item{nbins}{Number of bins or lags
+  \item{n.bins}{Number of bins or lag distances. This argument is only used when 
+  \code{size.bins=NULL}
   } 
+  \item{size.bins}{Size of bins in units of distance (e.g., km). When specified, this argument overrides
+  \code{n.bins}. Default is \code{NULL}}
   \item{extent}{Proportion of the spatial extent of the data over which to compute 
   the variogram. Default is 0.5 to limit potentially spurious results due to the 
   limited number of data points at large lag distances.
@@ -36,7 +39,7 @@ Compute the empirical variogram and determine its significance via Monte Carlo r
   \item{is.latlon}{Are coordinates latitudes/longitudes? Default is \code{TRUE}
 }
 
-\item{centered}{Should the variogram be centered by subtracting the regional mean
+\item{is.centered}{Should the variogram be centered by subtracting the regional mean
 from each value? If so, the zero-line represents the regional mean. Default is \code{FALSE}
 }
 \item{nrands}{Number of randomizations to determine statistical significance 
@@ -75,11 +78,11 @@ Returns a named list containing the following variables:
 \item{vario }{Variogram values in each lag/bin}
 \item{npoints }{Number of pairs of points in each lag/bin}
 \item{metric }{Type of variogram computed}
-\item{centered }{Is the variogram centered?}
+\item{is.centered }{Is the variogram centered?}
 \item{regional.mean }{Regional mean value}
 \item{pvals }{p-value for each lag/bin. 
 This variable is only returned if \code{nrands > 0}.}
-\item{rands }{\code{nrands} x \code{nbins} matrix of randomizations.
+\item{rands }{\code{nrands} x \code{n.bins} matrix of randomizations.
 This variable is only returned if \code{nrands > 0}.}
 \item{alternative }{One-tailed or two-tailed test?
 This variable is only returned if \code{nrands > 0}.}
@@ -126,8 +129,8 @@ d.upw.wide=reshape(data=d.upw, idvar=c("latitude", "longitude"), timevar=c("year
 d.cov.wide=reshape(data=d.cov, idvar=c("latitude", "longitude"), timevar=c("year"), 
                    direction="wide")
 ## Generate variograms
-v.upw=vario(nbins=12, data=d.upw.wide, type="pearson", extent=1, nrands=999)
-v.cov=vario(nbins=12, data=d.cov.wide, type="pearson", extent=1, nrands=999)
+v.upw=vario(n.bins=12, data=d.upw.wide, type="pearson", extent=1, nrands=999)
+v.cov=vario(n.bins=12, data=d.cov.wide, type="pearson", extent=1, nrands=999)
 ## Fit variograms
 v.cov.per=vario.fit(v.cov$vario, v.cov$mean.bin.dist, type="period", 
                     start.vals=list(a=1, b=3, c=0))

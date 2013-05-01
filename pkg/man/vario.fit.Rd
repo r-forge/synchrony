@@ -16,7 +16,7 @@ Fit model to the empirical variogram
 
 \arguments{
   \item{vario}{Empirical variogram from \code{emp.vario} function}
-  \item{bins}{Number of bins or lag distances from \code{emp.vario} function}
+  \item{bins}{Bins or lag distances from \code{emp.vario} function}
   \item{weights}{Vector of weights of the same length as \code{vario}. If \code{weights} is a vector 
   containing the number of points in each distance bin, the model will be fit via 
   weighted least squares with the weights corresponding to the proportion of points
