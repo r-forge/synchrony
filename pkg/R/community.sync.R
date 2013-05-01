@@ -18,6 +18,7 @@ community.sync <- function (comm.matrix, nrands = 0, method=c("pearson", "kendal
     results$rands[nrands+1]=results$obs
     results$pval=sum(results$rands >= results$obs)/(nrands+1)
   }
+  class(results)="synchrony"
   return (results)
 }
 

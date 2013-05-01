@@ -15,10 +15,10 @@ peaks <- function  (t1, t2, nrands = 0) {
     }
     randomized.peaks[n+1]=observed.peaks$peaks
     pval=sum(randomized.peaks >= observed.peaks$peaks)/(nrands+1)
-    results=list(pval=pval, rands=randomized.peaks, peaks=observed.peaks$peaks, 
+    results=list(pval=pval, rands=randomized.peaks, obs=observed.peaks$peaks, 
                  locations=observed.peaks$locations)
-  }
-  
+  }  
+  class(results)="synchrony"
   return (results)
 }
 

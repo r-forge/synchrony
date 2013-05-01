@@ -2,11 +2,10 @@ Package: synchrony
 Type: Package
 Title: Tools for computing spatial, temporal, and spatiotemporal statistics
 Version: 0.1
-Date: 2012-11-10
+Date: 2013-05-01
 Author: Tarik C. Gouhier
 Maintainer: Tarik C. Gouhier <tarik.gouhier@gmail.com>
 Description: Tools for computing spatial, temporal, and spatiotemporal statistics
 License: GPL (>=2)
 URL: http://synchrony.r-forge.r-project.org
 LazyLoad: yes
-Packaged: 2012-11-07 15:31:18 UTC; tarik

@@ -37,6 +37,7 @@ meancorr <- function (comm.matrix, nrands = 0,
     results$alternative=alternative
   }
   results$method=method
+  class(results)="synchrony"
   return (results)
 }
 

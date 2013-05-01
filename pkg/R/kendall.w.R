@@ -23,6 +23,7 @@ kendall.w <- function (data, nrands = 0) {
                  pval=kendall.observed$pval, spearman.corr=kendall.observed$spearman.ranked.corr,
                  pval.rand=p.val.rand, rands=rands)
   }
+  class(results)="synchrony"
   return (results)
 }
 
