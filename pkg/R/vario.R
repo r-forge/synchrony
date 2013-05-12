@@ -4,7 +4,8 @@ vario <- function (n.bins=20, size.bins=NULL, extent=0.5, data, data2=NULL,
                           "pearson", "spearman", "kendall", "moran", "geary"),
                    alternative=c("one.tailed", "two.tailed"),
                    mult.test.corr=c("none", "holm", "hochberg", "sidak", 
-                                    "bonferroni")) {
+                                    "bonferroni"),
+                  quiet = FALSE) {
   
   tails=c("one.tailed", "two.tailed")
   alternative=match.arg(tolower(alternative), tails)
@@ -30,7 +31,8 @@ vario <- function (n.bins=20, size.bins=NULL, extent=0.5, data, data2=NULL,
   
   if (nrands > 0) {
     rands=matrix(NA, nrow=nrands+1, ncol=length(results$bins))
-    prog.bar=txtProgressBar(min = 0, max = nrands, style = 3)
+    if (!quiet)
+      prog.bar=txtProgressBar(min = 0, max = nrands, style = 3)
     
     if (is.null(data2))
       data2=data
@@ -49,7 +51,8 @@ vario <- function (n.bins=20, size.bins=NULL, extent=0.5, data, data2=NULL,
                                 results$glob.sd, results$glob.N, is.multivar, type)
         }
       }
-      setTxtProgressBar(prog.bar, i)
+      if (!quiet)
+        setTxtProgressBar(prog.bar, i)
     }
     rands=rands-rowMeans(rands, na.rm=TRUE)
     crit.val=0
@@ -128,13 +131,13 @@ vario.aux <- function (n.bins=20, size.bins=NULL, extent=0.5, data, data2=NULL, 
       if (type=="cov")
         vals=cov(t(data[, 3:n.cols]))
       else {
-        vals<-cor(t(data[, 3:n.cols]), method=type, use = "pairwise.complete.obs")
+        vals=cor(t(data[, 3:n.cols]), method=type, use = "pairwise.complete.obs")
       }
       vals=vals[lower.tri(vals)]
     }
     else {
       if (type=="cov")
-        vals=cov(x=t(data[, 3:n.cols]), y=t(data2[, 3:n.cols]), use = "pairwise.complete.obs")
+        vals=cov(x=t(data[, 3:n.cols]), y=t(data2[, 3:n.cols]), use = "pairwise.complete.obs")      
       else
         vals=cor(x=t(data[, 3:n.cols]), y=t(data2[, 3:n.cols]), method=type, use = "pairwise.complete.obs")
       vals=vals[row(vals)!=col(vals)]

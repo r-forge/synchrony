@@ -10,7 +10,8 @@ matrix independently.
 }
 \usage{
 meancorr (comm.matrix, nrands = 0, alternative=c("one.tailed", "two.tailed"), 
-                            method=c("pearson", "kendall", "spearman"), ...)
+                            method=c("pearson", "kendall", "spearman"), 
+                            quiet = FALSE, ...)
 }
 \arguments{
  \item{comm.matrix}{
@@ -23,6 +24,9 @@ number of randomizations to perform (default is 0)
 \item{alternative}{Conduct a one-tailed or a two-tailed test? Default is \code{one.tailed}.}
 \item{method}{Method to compute correlation? Options include \code{pearson}, \code{kendall}, 
 and \code{spearman}. Default is \code{pearson}}
+\item{quiet}{
+Suppress progress bar when set to \code{TRUE}. Default is \code{FALSE}
+}
 \item{\dots}{
 Other parameters to \code{\link{cor}} function.
 }

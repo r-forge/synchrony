@@ -9,7 +9,7 @@ Find the proportion of local minima/maxima common to both time series and comput
 its significance via Monte Carlo randomizations
 }
 \usage{
-peaks (t1, t2, nrands = 0)
+peaks (t1, t2, nrands = 0, quiet = FALSE)
 }
 \arguments{
   \item{t1}{
@@ -23,6 +23,10 @@ steps and the second column should contain the values.
   \item{nrands}{
 number of randomizations. Default is \code{0}.
 }
+\item{quiet}{
+Suppress progress bar when set to \code{TRUE}. Default is \code{FALSE}
+}
+
 }
 \value{
 Returns a named list containing:

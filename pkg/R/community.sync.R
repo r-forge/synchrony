@@ -1,5 +1,5 @@
 ## Community matrix comm.matrix: n x m matrix with n=time step, m=species
-community.sync <- function (comm.matrix, nrands = 0, method=c("pearson", "kendall", "spearman"), ...) {
+community.sync <- function (comm.matrix, nrands = 0, method=c("pearson", "kendall", "spearman"), quiet=FALSE, ...) {
   comm.matrix=as.matrix(comm.matrix)
   results=list()
   results$obs=community.sync.aux (comm.matrix)
@@ -8,12 +8,14 @@ community.sync <- function (comm.matrix, nrands = 0, method=c("pearson", "kendal
   if (nrands > 0) {
     nr=NROW(comm.matrix)
     nc=NCOL(comm.matrix)      
-    prog.bar=txtProgressBar(min = 0, max = nrands, style = 3)
+    if (!quiet)
+      prog.bar=txtProgressBar(min = 0, max = nrands, style = 3)
     results$rands=numeric(length=nrands+1)*NA
     for (i in 1:nrands) {
       rand.mat=apply(comm.matrix, 2, sample)
       results$rands[i]=community.sync.aux(rand.mat)
-      setTxtProgressBar(prog.bar, i)
+      if (!quiet)
+        setTxtProgressBar(prog.bar, i)
     }
     results$rands[nrands+1]=results$obs
     results$pval=sum(results$rands >= results$obs)/(nrands+1)

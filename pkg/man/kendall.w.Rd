@@ -8,7 +8,7 @@ Kendall's W
 Compute Kendall's coefficient of concordance (W)
 }
 \usage{
-kendall.w (data, nrands = 0)
+kendall.w (data, nrands = 0, quiet = FALSE)
 }
 \arguments{
   \item{data}{
@@ -18,7 +18,9 @@ kendall.w (data, nrands = 0)
   \item{nrands}{
   Number of randomizations to perform to determine significance. Default is 0.
 }
-
+\item{quiet}{
+Suppress progress bar when set to \code{TRUE}. Default is \code{FALSE}
+}
 }
 \details{
 Kendall's W is a non-parametric statistic that ranges from 0 to 1 and measures 

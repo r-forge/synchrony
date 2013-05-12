@@ -13,7 +13,7 @@ coord2dist <- function (coords, is.latlon=TRUE, lower.tri=TRUE) {
   }
   ## Compute cartesian distance
   else {
-    all.dists=dist(coords)
+    all.dists=as.matrix(dist(coords))
   }
   
   if (lower.tri)

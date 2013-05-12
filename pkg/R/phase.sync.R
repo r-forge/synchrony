@@ -1,5 +1,5 @@
 phase.sync <- function (t1, t2, nrands = 0, type = 1, nbreaks = 10, 
-                               mins = FALSE) {
+                               mins = FALSE, quiet = FALSE) {
   p=phase.sync.aux(t1, t2, mins=mins)
   
   if (nrands == 0) {
@@ -38,8 +38,8 @@ phase.sync <- function (t1, t2, nrands = 0, type = 1, nbreaks = 10,
     }
     trans.t1=trans.t1/rowSums(trans.t1)  
     trans.t2=trans.t2/rowSums(trans.t2)  
-    
-    prog.bar=txtProgressBar(min = 0, max = nrands, style = 3)
+    if (!quiet)
+      prog.bar=txtProgressBar(min = 0, max = nrands, style = 3)
     for (r in 1:nrands) {
       surr.t1=surrogate.ts(ts=t1, distr.ts=distr.t1, nbreaks=nbreaks)
       surr.t2=surrogate.ts(ts=t2, distr.ts=distr.t2, nbreaks=nbreaks)
@@ -52,7 +52,8 @@ phase.sync <- function (t1, t2, nrands = 0, type = 1, nbreaks = 10,
       rand.S=-sum(rand.p*log(rand.p), na.rm=TRUE)
       rand.Smax=log(rand.nbins)
       rands[r]=(rand.Smax-rand.S)/rand.Smax
-      setTxtProgressBar(prog.bar, r)
+      if (!quiet)
+        setTxtProgressBar(prog.bar, r)
     }
     rands[r+1]=Q.obs
     pValue = sum (rands >= Q.obs)/(nrands+1)
@@ -63,7 +64,7 @@ phase.sync <- function (t1, t2, nrands = 0, type = 1, nbreaks = 10,
     results=list(Q.obs=Q.obs, pval=pValue, rands=rands, phases1=p$phases1,
                  phases2=p$phases2, deltaphase=p$deltaphase, icdf=icdf)
   }
-  
+  class(results)="phase"
   return (results)
 }
 

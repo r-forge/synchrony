@@ -8,7 +8,7 @@ Compute the phase synchrony between two quasi-periodic time series by quantifyin
 their phase difference at each time step
 }
 \usage{
-phase.sync (t1, t2,  nrands =  0, type = 1, nbreaks = 10, mins = FALSE)
+phase.sync (t1, t2,  nrands =  0, type = 1, nbreaks = 10, mins = FALSE, quiet = FALSE)
 }
 \arguments{
  \item{t1}{
@@ -31,7 +31,10 @@ number of randomizations to perform (default is 0)
   \item{nbreaks}{number of bins to use to group the values in the time series.
   Default is \code{10}.
   }
-     \item{mins}{
+  \item{quiet}{
+Suppress progress bar when set to \code{TRUE}. Default is \code{FALSE}
+}
+  \item{mins}{
 use local minima instead of local maxima to compute and the interpolate the phase. Default is
 \code{FALSE}.
 }

@@ -1,4 +1,4 @@
-kendall.w <- function (data, nrands = 0) {
+kendall.w <- function (data, nrands = 0, quiet = FALSE) {
   data=as.matrix(data)
   kendall.observed=kendall.w.aux (data)
   n=NROW(data)
@@ -9,12 +9,14 @@ kendall.w <- function (data, nrands = 0) {
   }
   else {
     rands=numeric(length=nrands+1)
-    prog.bar=txtProgressBar(min = 0, max = nrands, style = 3)
+    if (!quiet)
+      prog.bar=txtProgressBar(min = 0, max = nrands, style = 3)
     for (i in 1:nrands) {
       tmp=apply(data, 2, sample)
       ## Using chi^2 or W is equivalent for permutation purposes 
       rands[i]=kendall.w.aux(tmp)$w.corrected
-      setTxtProgressBar(prog.bar, i)  
+      if (!quiet)
+        setTxtProgressBar(prog.bar, i)  
     }
     rands[i+1]=kendall.observed$w.corrected
     p.val.rand=sum(rands >= kendall.observed$w.corrected)/(nrands+1)

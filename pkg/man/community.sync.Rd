@@ -12,7 +12,8 @@ matrix independently. This function also returns the mean correlation between th
 of the matrix.
 }
 \usage{
-community.sync (comm.matrix, nrands = 0, method=c("pearson", "kendall", "spearman"), ...)
+community.sync (comm.matrix, nrands = 0, method=c("pearson", "kendall", "spearman"), 
+                quiet = FALSE, ...)
 }
 \arguments{
  \item{comm.matrix}{
@@ -24,6 +25,11 @@ number of randomizations to perform (default is 0)
 }
 \item{method}{Method to compute mean correlation between columns? 
 Options include \code{pearson}, \code{kendall}, and \code{spearman}. Default is \code{pearson}}
+
+\item{quiet}{
+Suppress progress bar when set to \code{TRUE}. Default is \code{FALSE}
+}
+
 \item{\dots}{
 Other parameters to \code{\link{cor}} function.
 }
