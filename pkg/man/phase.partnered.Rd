@@ -9,7 +9,7 @@ Create two time series with specific autocorrelation \eqn{\gamma}, cross-correla
 phase partnered algorithm described by Vasseur (2007)
 }
 \usage{
-phase.partnered (n = 2000, rho = 1, gamma = 1, ts.sd = 0.1, ts.mean = 0)
+phase.partnered (n = 2000, rho = 1, gamma = 1, sigma = 0.1, mu = 0)
 }
 \arguments{
   \item{n}{
@@ -21,21 +21,24 @@ Default is \code{1}.
 }
   \item{gamma}{
 autocorrelation of each time series. Gamma (\eqn{\gamma}) describes the relationship between 
-frequency \eqn{f} and power \eqn{P}: \eqn{P(f)=1/f^\gamma}
-
-
-\eqn{-2\le \gamma \le 0}: blue noise and \eqn{0\le \gamma \le 2}: red noise. Default is \code{1}.
+frequency \eqn{f} and power \eqn{P}: \eqn{P(f)=1/f^\gamma}. If \eqn{-2\le \gamma \le 0}: blue noise and \eqn{0\le \gamma \le 2}: red noise. Default is \code{1}.
 }
-  \item{ts.sd}{
+  \item{sigma}{
 standard deviation of both time series. Default is \code{0.1}.
 }
-  \item{ts.mean}{
+  \item{mu}{
 mean of both time series. Default is \code{0}.
 }
 }
 
 \value{
-Returns an \code{n} x 2 matrix containing the time series
+Returns a named list containing the following:
+
+\item{rho }{Cross-correlation of the time series}
+\item{gamma }{Autocorrelation of the time series}
+\item{sigma }{Standard deviation of the time series}
+\item{mu }{Mean of the time series}
+\item{timeseries }{\code{n} x 2 matrix containing the time series}
 }
 \references{
 Gouhier, T. C., F. Guichard, and A. Gonzalez. 2010. Synchrony and stability of 
@@ -53,6 +56,6 @@ pos.corr=phase.partnered(n = 100, rho = 0.7, gamma = 0)
 ## Negatively cross-correlated white noise
 neg.corr=phase.partnered(n = 100, rho = -1, gamma = 0)
 par(mfrow=c(2,1))
-matplot (pos.corr, t="l", lty=1)
-matplot (neg.corr, t="l", lty=1)
+matplot (pos.corr$timeseries, t="l", lty=1)
+matplot (neg.corr$timeseries, t="l", lty=1)
 }

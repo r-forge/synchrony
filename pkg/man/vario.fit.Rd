@@ -11,7 +11,7 @@ Fit model to the empirical variogram
                        "exponential", "sill", "periodic", "hole"),
                        start.vals = list(c0 = 0, c1 = max(vario), 
                                           a = max(bins)/4, b=0.1, c=0.1),
-                       control=list(maxit=10000)) 
+                       control = list(maxit=10000)) 
 }
 
 \arguments{

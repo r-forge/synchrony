@@ -10,7 +10,7 @@ Plot \code{vario} objects
 \method{plot}{vario} (x, xlab = "Lag distance", ylab = NULL, ylim = NULL,
                       xtype = c("mean.bin.dist", "bins"), rug = FALSE, ci = FALSE,
                       pch = 21, col.sig="black", col.nonsig="black", bg.sig="black", 
-                      bg.nonsig="white", alpha = 0.05, \dots)
+                      bg.nonsig = "white", alpha = 0.05, \dots)
 }
 \arguments{
   \item{x}{

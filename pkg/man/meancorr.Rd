@@ -9,9 +9,9 @@ The Monte Carlo randomizations are performed by shuffling the columns of the com
 matrix independently.
 }
 \usage{
-meancorr (comm.matrix, nrands = 0, alternative=c("one.tailed", "two.tailed"), 
-                            method=c("pearson", "kendall", "spearman"), 
-                            quiet = FALSE, ...)
+meancorr (comm.matrix, nrands = 0, alternative = c("two.tailed", "greater", "less"), 
+                            method = c("pearson", "kendall", "spearman"), 
+                            type = 1, quiet = FALSE, ...)
 }
 \arguments{
  \item{comm.matrix}{
@@ -21,9 +21,17 @@ and each column corresponds to a different species.
  \item{nrands}{
 number of randomizations to perform (default is 0)
 }
-\item{alternative}{Conduct a one-tailed or a two-tailed test? Default is \code{one.tailed}.}
+\item{alternative}{Alternative hypothesis. Options include \code{greater} and 
+\code{less} for the one-tailed test and \code{two.tailed}. Default is \code{two.tailed}.}
 \item{method}{Method to compute correlation? Options include \code{pearson}, \code{kendall}, 
 and \code{spearman}. Default is \code{pearson}}
+\item{type}{
+Randomization method. The \code{type=1} method randomly shuffles each column of the data
+matrix, thus destroying both the autocorrelation structure of each column and the cross-correlation
+between columns. The \code{type=2} method shifts each column of the data matrix
+by a random amount, thus preserving the autocorrelation structure of each column but destroying
+the cross-correlation between columns (Purves and Law 2002). Default is \code{type=1}
+}
 \item{quiet}{
 Suppress progress bar when set to \code{TRUE}. Default is \code{FALSE}
 }
@@ -43,6 +51,13 @@ This variable is only returned if \code{nrands > 0}.}
 \item{alternative }{One-tailed or two-tailed test?
 This variable is only returned if \code{nrands > 0}.}
 \item{method }{Method used to compute the mean correlation.}
+\item{alternative }{Alternative hypothesis. This variable is only returned if \code{nrands > 0}.}
+}
+
+\references{
+
+Purves, D. W., and R. Law. 2002. Fine-scale spatial structure in a grassland community: quantifying the plant's eye view. 
+\emph{Journal of Ecology} 90:121-129.
 }
 
 \author{

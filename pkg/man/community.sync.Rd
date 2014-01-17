@@ -12,8 +12,8 @@ matrix independently. This function also returns the mean correlation between th
 of the matrix.
 }
 \usage{
-community.sync (comm.matrix, nrands = 0, method=c("pearson", "kendall", "spearman"), 
-                quiet = FALSE, ...)
+community.sync (comm.matrix, nrands = 0, method = c("pearson", "kendall", "spearman"), 
+                alternative = c("greater", "less"), type = 1, quiet = FALSE, ...)
 }
 \arguments{
  \item{comm.matrix}{
@@ -25,6 +25,17 @@ number of randomizations to perform (default is 0)
 }
 \item{method}{Method to compute mean correlation between columns? 
 Options include \code{pearson}, \code{kendall}, and \code{spearman}. Default is \code{pearson}}
+
+\item{alternative}{Alternative hypothesis. Options are
+\code{less} and \code{greater}. Default is \code{greater}}
+
+\item{type}{
+Randomization method. The \code{type=1} method randomly shuffles each column of the data
+matrix, thus destroying both the autocorrelation structure of each column and the cross-correlation
+between columns. The \code{type=2} method shifts each column of the data matrix
+by a random amount, thus preserving the autocorrelation structure of each column but destroying
+the cross-correlation between columns (Purves and Law 2002). Default is \code{type=1}
+}
 
 \item{quiet}{
 Suppress progress bar when set to \code{TRUE}. Default is \code{FALSE}
@@ -52,12 +63,16 @@ Returns a named list containing:
 This variable is only returned if \code{nrands > 0}.}
 \item{pval }{p-value of observed community synchrony. 
 This variable is only returned if \code{nrands > 0}.}
+\item{alternative }{Alternative hypothesis. This variable is only returned if \code{nrands > 0}.}
 }
 
 \references{
 Loreau, M., and C. de Mazancourt. 2008. Species synchrony and its drivers: 
 Neutral and nonneutral community dynamics in fluctuating environments. 
 \emph{The American Naturalist} 172:E48-E66.
+
+Purves, D. W., and R. Law. 2002. Fine-scale spatial structure in a grassland community: quantifying the plant's eye view. 
+\emph{Journal of Ecology} 90:121-129.
 }
 
 \author{

@@ -7,8 +7,9 @@
   Plot \code{synchrony} objects
 }
 \usage{
-  \method{plot}{synchrony} (x, main="", xlab="Observations from randomizations", 
-                            ylab="Frequency", col="red", lty=2, lwd=1, \dots)
+  \method{plot}{synchrony} (x, main = "", xlab = "Values from randomizations", 
+                            ylab = "Frequency", line.col = "red", lty = 2, 
+                            lwd = 1, col = "grey", \dots)
 }
 \arguments{
   \item{x}{
@@ -18,12 +19,12 @@
   main title of the figure
   }
   \item{xlab}{
-    xlabel of the figure. Default is "Observations from randomizations"
+    xlabel of the figure. Default is "Values from randomizations"
   }
   \item{ylab}{
     ylabel of the figure. Default is "Frequency"
   }
-  \item{col}{
+  \item{line.col}{
     color of the vertical line indicating the value observed in the data. Default is "red"
   }
   \item{lty}{
@@ -31,6 +32,9 @@
   }
   \item{lwd}{
     line width. Default is 1
+  }
+  \item{col}{
+    color of the bars. Default is grey  
   }
   \item{\dots}{
     other graphical parameters.

@@ -14,8 +14,9 @@ find.minmax <- function (timeseries) {
   
   rownames(mins)=1:NROW(mins)
   rownames(maxs)=1:NROW(maxs)
-
-  return (list(mins=mins, maxs=maxs))
+  results=list(mins=mins, maxs=maxs)
+  class(results)="minmax"
+  return (results)
 }
 
 find.minmax.aux <- function (timeseries, mins=FALSE) {

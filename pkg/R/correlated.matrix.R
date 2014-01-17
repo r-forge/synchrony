@@ -23,5 +23,6 @@ correlated.matrix <- function (rho = 0, sigma = 1, mu = 0, ntimes = 200, nspecie
   }
   
   results=list(rho=rho, sigma=sigma, mu=mu, community=community)
-  return (results)  
+  class(results)="cormat"
+  return (results)
 }

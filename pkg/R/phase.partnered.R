@@ -1,5 +1,5 @@
 phase.partnered <-
-function (n=2000, rho=1, gamma=1, ts.sd=0.10, ts.mean=0) {
+function (n=2000, rho=1, gamma=1, sigma=0.10, mu=0) {
   
   ts.part=matrix(nrow=n, ncol=2, NA)
   minVal=0
@@ -19,9 +19,10 @@ function (n=2000, rho=1, gamma=1, ts.sd=0.10, ts.mean=0) {
     ts.part[t,2]=sum(const.num*(sin(2*pi*fs*t/n + phi2)))
   }
 
-  ts.part=ts.mean+(ts.part/apply(ts.part, 2, sd))*ts.sd
+  ts.part=mu+(ts.part/apply(ts.part, 2, sd))*sigma
   ts.part=as.data.frame(ts.part)
-  colnames(ts.part) <- c("ts1", "ts2")
-
-  return (ts.part)
+  colnames(ts.part) <- c("timeseries1", "timeseries2")
+  results=list(rho=rho, gamma=gamma, sigma=sigma, mu=mu, timeseries=ts.part)
+  class(results)="phasepart"
+  return (results)
 }

@@ -3,8 +3,7 @@ vario <- function (n.bins=20, size.bins=NULL, extent=0.5, data, data2=NULL,
                    type=c("semivar", "cov", 
                           "pearson", "spearman", "kendall", "moran", "geary"),
                    alternative=c("one.tailed", "two.tailed"),
-                   mult.test.corr=c("none", "holm", "hochberg", "sidak", 
-                                    "bonferroni"),
+                   mult.test.corr=c("none", "holm", "hochberg", "bonferroni"),
                   quiet = FALSE) {
   
   tails=c("one.tailed", "two.tailed")
@@ -13,7 +12,7 @@ vario <- function (n.bins=20, size.bins=NULL, extent=0.5, data, data2=NULL,
   types=c("semivar", "cov", "pearson", "spearman", "kendall", "moran", "geary")
   type=match.arg(tolower(type), types)
   
-  mults=c("none", "holm", "hochberg", "sidak", "bonferroni")
+  mults=c("none", "holm", "hochberg", "bonferroni")
   mult.test.corr=match.arg(tolower(mult.test.corr), mults)
   
   n.cols=NCOL(data)

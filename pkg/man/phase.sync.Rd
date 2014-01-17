@@ -8,7 +8,8 @@ Compute the phase synchrony between two quasi-periodic time series by quantifyin
 their phase difference at each time step
 }
 \usage{
-phase.sync (t1, t2,  nrands =  0, type = 1, nbreaks = 10, mins = FALSE, quiet = FALSE)
+phase.sync (t1, t2,  nrands = 0, mod = 1, nbreaks = 10, mins = FALSE,
+            quiet = FALSE)
 }
 \arguments{
  \item{t1}{
@@ -24,9 +25,9 @@ steps and the second column should contain the values.
   \item{nrands}{
 number of randomizations to perform (default is 0)  
 }
-  \item{type}{flag to indicate whether to compute phase difference modulus \eqn{2\pi} 
-  between 0 and \eqn{2\pi} (\code{type=1}) or phase difference modulus 
-  \eqn{2\pi} between \eqn{-\pi} and \eqn{\pi}. Default is \code{1}.
+  \item{mod}{flag to indicate whether to compute phase difference modulus \eqn{2\pi} 
+  between 0 and \eqn{2\pi} (\code{mod=1}) or phase difference modulus 
+  \eqn{2\pi} between \eqn{-\pi} and \eqn{\pi} (\code{mod=2}). Default is \code{mod=1}.
   } 
   \item{nbreaks}{number of bins to use to group the values in the time series.
   Default is \code{10}.

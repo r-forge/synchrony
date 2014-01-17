@@ -7,8 +7,8 @@
 Compute the empirical variogram values for each bin
 }
 \usage{vario.func (x, y, glob.mean, glob.sd, glob.N, is.multivar = FALSE,
-                        type=c("semivar", "cov", "pearson", 
-                               "spearman", "kendall", "moran", "geary"))
+                        type = c("semivar", "cov", "pearson", 
+                                 "spearman", "kendall", "moran", "geary"))
 }
 
 \arguments{

@@ -9,7 +9,7 @@ Find the proportion of local minima/maxima common to both time series and comput
 its significance via Monte Carlo randomizations
 }
 \usage{
-peaks (t1, t2, nrands = 0, quiet = FALSE)
+peaks (t1, t2, nrands = 0, type = 1, quiet = FALSE)
 }
 \arguments{
   \item{t1}{
@@ -23,6 +23,14 @@ steps and the second column should contain the values.
   \item{nrands}{
 number of randomizations. Default is \code{0}.
 }
+  \item{type}{
+Randomization method. The \code{type=1} method randomly shuffles each time series, 
+thus destroying both the autocorrelation structure of each time series and their 
+cross-correlation. The \code{type=2} method shifts each time series by a random amount, 
+thus preserving the autocorrelation structure but destroying the cross-correlation 
+between the time series (Purves and Law 2002). Default is \code{type=1}
+}
+
 \item{quiet}{
 Suppress progress bar when set to \code{TRUE}. Default is \code{FALSE}
 }
@@ -39,6 +47,9 @@ Returns a named list containing:
 \references{
 Buonaccorsi, J. P., J. S. Elkinton, S. R. Evans, and A. M. Liebhold. 2001. 
 Measuring and testing for spatial synchrony. \emph{Ecology} 82:1668-1679.
+
+Purves, D. W., and R. Law. 2002. Fine-scale spatial structure in a grassland community: quantifying the plant's eye view. 
+\emph{Journal of Ecology} 90:121-129.
 }
 \author{
 Tarik C. Gouhier (tarik.gouhier@gmail.com)

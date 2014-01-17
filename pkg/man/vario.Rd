@@ -11,7 +11,7 @@ Compute the empirical variogram and determine its significance via Monte Carlo r
                   type = c("semivar", "cov", "pearson", 
                   "spearman", "kendall", "moran", "geary"),
                   alternative = c("one.tailed", "two.tailed"),
-                  mult.test.corr = c("none", "holm", "hochberg", "sidak", "bonferroni"),
+                  mult.test.corr = c("none", "holm", "hochberg", "bonferroni"),
                   quiet = FALSE)
 }
 
@@ -57,7 +57,7 @@ mean. If the variogram is centered, the null hypothesis is that the local values
 If the variogram is not centered, the null hypothesis is that the local values are equal to the 
 regional mean. Default is \code{one.tailed}}
 \item{mult.test.corr}{Correct for multiple tests? Default is \code{"none"}. Other options include
-\code{holm}, \code{hochberg}, \code{sidak}, and \code{bonferroni}
+\code{holm}, \code{hochberg} and \code{bonferroni}
 }
 \item{quiet}{
 Suppress progress bar when set to \code{TRUE}. Default is \code{FALSE}

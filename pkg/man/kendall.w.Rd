@@ -8,7 +8,7 @@ Kendall's W
 Compute Kendall's coefficient of concordance (W)
 }
 \usage{
-kendall.w (data, nrands = 0, quiet = FALSE)
+kendall.w (data, nrands = 0, type = 1, quiet = FALSE)
 }
 \arguments{
   \item{data}{
@@ -18,6 +18,14 @@ kendall.w (data, nrands = 0, quiet = FALSE)
   \item{nrands}{
   Number of randomizations to perform to determine significance. Default is 0.
 }
+\item{type}{
+Randomization method. The \code{type=1} method randomly shuffles each column of the data
+matrix, thus destroying both the autocorrelation structure of each column and the cross-correlation
+between columns. The \code{type=2} method shifts each column of the data matrix
+by a random amount, thus preserving the autocorrelation structure of each column but destroying
+the cross-correlation between columns (Purves and Law 2002). Default is \code{type=1}
+}
+
 \item{quiet}{
 Suppress progress bar when set to \code{TRUE}. Default is \code{FALSE}
 }
@@ -54,6 +62,9 @@ food webs in metacommunities. \emph{The American Naturalist} 175:E16-E34.
 
 Legendre, P. 2005. Species associations: the Kendall coefficient of concordance 
 revisited. \emph{Journal of Agricultural, Biological, and Environmental Statistics} 10:226-245.
+
+Purves, D. W., and R. Law. 2002. Fine-scale spatial structure in a grassland community: quantifying the plant's eye view. 
+\emph{Journal of Ecology} 90:121-129.
 
 Zar, J. H. 1999. Biostatistical Analysis, Fourth edition. Prentice-Hall, Inc., 
 Upper Saddle River, NJ.
