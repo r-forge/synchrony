@@ -3,10 +3,13 @@
 \alias{synchrony}
 \docType{package}
 \title{
-Tools for computing spatial, temporal, and spatiotemporal statistics
+Methods for computing spatial, temporal, and spatiotemporal statistics
 }
 \description{
-Tools for computing spatial, temporal, and spatiotemporal statistics
+Methods for computing spatial, temporal, and spatiotemporal statistics including:
+empirical univariate, bivariate and multivariate variograms; 
+fitting variogram models; phase locking and synchrony analysis; 
+generating autocorrelated and cross-correlated matrices.
 }
 \details{
 \tabular{ll}{

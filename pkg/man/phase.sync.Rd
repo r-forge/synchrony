@@ -15,12 +15,16 @@ phase.sync (t1, t2,  nrands = 0, mod = 1, nbreaks = 10, mins = FALSE,
  \item{t1}{
 time series 1 in matrix format (\code{n} rows x 2 columns). 
 The first column should contain the time 
-steps and the second column should contain the values.
+steps and the second column should contain the values. If \code{t1} is a column
+vector instead of a matrix, then it will be automatically converted to a 
+matrix with column 1 corresponding to a time index ranging from 1 to the length of \code{t1}.
 }
   \item{t2}{
 time series 2 in matrix format (\code{n} rows x 2 columns). 
 The first column should contain the time 
-steps and the second column should contain the values.
+steps and the second column should contain the values. If \code{t2} is a column
+vector instead of a matrix, then it will be automatically converted to
+matrix with column 1 corresponding to a time index ranging from 1 to the length of \code{t2}.
 }
   \item{nrands}{
 number of randomizations to perform (default is 0)  

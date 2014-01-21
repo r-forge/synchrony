@@ -7,8 +7,9 @@ Plot \code{variofit} objects
 Plot \code{variofit} objects
 }
 \usage{
-\method{plot}{variofit} (x, xlab = "Lag distance", ylab = "Variogram", 
-                         col.pts = "black", col.line = "red", pch = 21, \dots)                      
+\method{plot}{variofit} (x, xlab = "Lag distance", ylab = "Variogram",
+                         col.pts = "black", col.line = "red", 
+                         pch = 21, \dots)                      
 }
 \arguments{
   \item{x}{

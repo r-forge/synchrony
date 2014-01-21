@@ -85,10 +85,13 @@ legend(x="topleft", legend=paste(c("Spherical AIC:", "Exponential AIC:",
        bty="n")
 
 ## Correlogram
-cover=subset(pisco.data, subset=year==2000, select=c("latitude", "longitude", "mussel_abund"))
+cover=subset(pisco.data, subset=year==2000, 
+             select=c("latitude", "longitude", "mussel_abund"))
 moran=vario(data=cover, type="moran")
-mod.hol=vario.fit(moran$vario, moran$mean.bin.dist, type="hole", start.vals=list(c0=0.6, a=25, c1=0.01))
-mod.per=vario.fit(moran$vario, moran$mean.bin.dist, type="period", start.vals=list(a=1, b=3, c=0))
+mod.hol=vario.fit(moran$vario, moran$mean.bin.dist, 
+                  type="hole", start.vals=list(c0=0.6, a=25, c1=0.01))
+mod.per=vario.fit(moran$vario, moran$mean.bin.dist, type="period",
+                  start.vals=list(a=1, b=3, c=0))
 mod.lin=vario.fit(moran$vario, moran$mean.bin.dist, type="linear")
 plot(moran, xlab="Lag distance (km)", ylim=c(-0.6, 0.8))
 lines(moran$mean.bin.dist, mod.per$fit, col="red")
