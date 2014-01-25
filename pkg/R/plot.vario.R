@@ -51,13 +51,10 @@ plot.vario <-
       plot(xvals, x$vario, xlab=xlab, ylab=ylab, ylim=ylim, col=col.sig, ...)
     }
     
-    if (is.null(x$pvals))
-      points (xvals, x$vario, xlab=xlab, ylab=ylab, type="p", ylim=ylim, pch=pch, bg=bg.nonsig, 
-              col=col.nonsig)
-    else {
-      points(xvals[x$pvals >= alpha], x$vario[x$pvals >= alpha], bg=bg.nonsig, pch=pch, col=col.nonsig)
-      points(xvals[x$pvals < alpha], x$vario[x$pvals < alpha], bg=bg.sig, pch=pch, col=col.sig)
-    }  
+    if (!is.null(x$pvals)) {
+      points(xvals[x$pvals >= alpha], x$vario[x$pvals >= alpha], bg=bg.nonsig, pch=pch, col=col.nonsig, ...)
+      points(xvals[x$pvals < alpha], x$vario[x$pvals < alpha], bg=bg.sig, pch=pch, col=col.sig, ...)
+    } 
     if (!is.na(h)) {
       if (x$is.centered)
         hv=h

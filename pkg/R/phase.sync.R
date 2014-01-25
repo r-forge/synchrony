@@ -1,6 +1,6 @@
 phase.sync <- function (t1, t2, nrands = 0, mod = 1, nbreaks = 10, 
                         mins = FALSE, quiet = FALSE) {
-
+  
   if (NCOL(t1)==1 | NCOL(t2)==1) {
     t1=cbind(1:NROW(t1), t1)
     t2=cbind(1:NROW(t2), t2)    

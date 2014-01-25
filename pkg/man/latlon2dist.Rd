@@ -25,7 +25,7 @@ Tarik C. Gouhier (tarik.gouhier@gmail.com)
 }
 \examples{
 coords=c(32, -125, 43, -130)
-## Compute great circle distance
+# Compute great circle distance
 latlon2dist(coords)
 }
 \keyword{ dist }

@@ -1,4 +1,7 @@
 surrogate.ts <- function (ts, distr.ts=NULL, trans.ts=NULL, nbreaks=10) {
+  if (NCOL(ts)==1) {
+    ts=cbind(1:NROW(ts), ts)
+  }
   surr.ts=numeric(length=NROW(ts))*NA
   if (is.null(trans.ts)) {  
     ## Determine transition probabilities

@@ -41,7 +41,7 @@ Tarik C. Gouhier (tarik.gouhier@gmail.com)
 }
 
 \examples{
-## Environmental variogram
+# Environmental variogram
 data(pisco.data)
 d=subset(pisco.data, subset=year==2000, select=c("latitude", "longitude", "upwelling"))
 semiv=vario(data=d)

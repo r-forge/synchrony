@@ -56,10 +56,10 @@ Tarik C. Gouhier (tarik.gouhier@gmail.com)
 
 \examples{
 mat=correlated.matrix(rho=0.85, sigma=30, mu=10, nspecies=10)
-## Check sd of each column
+# Check sd of each column
 apply(mat$community, 2, sd)
-## Check mean of each column
+# Check mean of each column
 apply(mat$community, 2, mean)
-## Check correlation of matrix
+# Check correlation of matrix
 community.sync(mat$community)
 }

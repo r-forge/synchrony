@@ -1,5 +1,5 @@
 bibentry("Manual",
-         title = "synchrony: tools for computing spatial, temporal, and spatiotemporal statistics in R",
+         title = "synchrony: Methods for computing spatial, temporal, and spatiotemporal statistics in R",
          author = person("Tarik C. Gouhier"),
          address      = "tarik.gouhier@gmail.com",
          year         = format(as.Date(meta$Date), "%Y"),

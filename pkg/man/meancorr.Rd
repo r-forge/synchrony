@@ -48,10 +48,9 @@ Returns a named list containing:
 This variable is only returned if \code{nrands > 0}.}
 \item{pval }{p-value of observed mean correlation. 
 This variable is only returned if \code{nrands > 0}.}
-\item{alternative }{One-tailed or two-tailed test?
+\item{alternative }{Alternative hypothesis.
 This variable is only returned if \code{nrands > 0}.}
 \item{method }{Method used to compute the mean correlation.}
-\item{alternative }{Alternative hypothesis. This variable is only returned if \code{nrands > 0}.}
 }
 
 \references{
@@ -65,13 +64,13 @@ Tarik C. Gouhier (tarik.gouhier@gmail.com)
 }
 
 \examples{
-## Community matrix for 20 species undergoing random fluctuations 
+# Community matrix for 20 species undergoing random fluctuations 
 comm.rand=matrix(runif(100), nrow=5, ncol=20)
 meancorr(comm.rand, nrands=20)$pval
-## Community matrix for 20 species undergoing synchronized fluctuations 
+# Community matrix for 20 species undergoing synchronized fluctuations 
 comm.corr=matrix(rep(comm.rand[,1], 20), nrow=5, ncol=20)
 meancorr(comm.corr, nrands=20)$pval
-## On "real" data
+# On "real" data
 data(bird.traits)
 meancorr(bird.traits, nrands=20)$pval
 }

@@ -1,4 +1,8 @@
 find.minmax <- function (timeseries) {
+  
+  if (NCOL(timeseries)==1) {
+    timeseries=cbind(1:NROW(timeseries), timeseries)
+  }
   ## Find local maxima
   max.index <- find.minmax.aux (timeseries)
   ## Find local minima

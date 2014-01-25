@@ -1,4 +1,9 @@
 peaks <- function  (t1, t2, nrands = 0, type = 1, quiet = FALSE) {
+  
+  if (NCOL(t1)==1 | NCOL(t2)==1) {
+    t1=cbind(1:NROW(t1), t1)
+    t2=cbind(1:NROW(t2), t2)    
+  }
   observed.peaks=peaks.aux (t1, t2)
   
   if (nrands == 0) {

@@ -124,15 +124,15 @@ points(moran$mean.bin.dist[moran$pvals < 0.05], moran$vario[moran$pvals < 0.05],
        bg="black", pch=21)
 abline(h=0, lty=2)
 
-## Compute spatial synchrony
+# Compute spatial synchrony
 d.upw=subset(pisco.data, select=c("latitude", "longitude", "year", "upwelling"))
 d.cov=subset(pisco.data, select=c("latitude", "longitude", "year", "mussel_abund"))
-## Reshape the data
+# Reshape the data
 d.upw.wide=reshape(data=d.upw, idvar=c("latitude", "longitude"), timevar=c("year"), 
                    direction="wide")
 d.cov.wide=reshape(data=d.cov, idvar=c("latitude", "longitude"), timevar=c("year"), 
                    direction="wide")
-## Generate variograms
+# Generate variograms
 v.upw=vario(n.bins=12, data=d.upw.wide, type="pearson", extent=1, nrands=999)
 v.cov=vario(n.bins=12, data=d.cov.wide, type="pearson", extent=1, nrands=999)
 ## Fit variograms
@@ -148,6 +148,5 @@ lines(v.cov$mean.bin.dist, v.cov.per$fit, col="red")
 plot(v.upw, xlab="Lag distance (km)", bg.sig="blue", col.nonsig="blue", 
      main="Upwelling", rug=TRUE)
 lines(v.upw$mean.bin.dist, v.upw.lin$fit, col="blue")
-
 }
 \keyword{ variogram }

@@ -32,6 +32,6 @@ correlation, \code{spearman} for Spearman correlation, \code{kendall} for Kendal
   \code{\link{vario}}
 }
 \examples{
-  ## Internal function used by vario
+  # Internal function used by vario
 }
 \keyword{ variogram }

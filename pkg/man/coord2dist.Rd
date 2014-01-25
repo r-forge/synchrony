@@ -28,7 +28,7 @@ Tarik C. Gouhier (tarik.gouhier@gmail.com)
 }
 \examples{
 coords=rbind(c(32, -125), c(43, -130))
-## Compute great circle distance
+# Compute great circle distance
 coord2dist(coords)
 }
 \keyword{ dist }

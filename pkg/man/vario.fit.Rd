@@ -59,14 +59,14 @@ Tarik C. Gouhier (tarik.gouhier@gmail.com)
 \code{\link{vario}, \link{vario.func}}
 }
 \examples{
-## Load data
+# Load data
 data(pisco.data)
-## Environmental variogram
+# Environmental variogram
 d=subset(pisco.data, subset=year==2000, select=c("latitude", "longitude", "upwelling"))
 semiv=vario(data=d)
 plot(semiv, xlab="Lag distance (km)")
 mod.sph=vario.fit(semiv$vario, semiv$mean.bin.dist)
-## Weighted least squares fit based on the number of points
+# Weighted least squares fit based on the number of points
 mod.exp=vario.fit(semiv$vario, semiv$mean.bin.dist, 
                   weights=semiv$npoints/sum(semiv$npoints), 
                   type="expo")
@@ -84,7 +84,7 @@ legend(x="topleft", legend=paste(c("Spherical AIC:", "Exponential AIC:",
        format(mod.lin$AIC, dig=2))), lty=1, col=c("red", "black", "blue", "green"), 
        bty="n")
 
-## Correlogram
+# Correlogram
 cover=subset(pisco.data, subset=year==2000, 
              select=c("latitude", "longitude", "mussel_abund"))
 moran=vario(data=cover, type="moran")

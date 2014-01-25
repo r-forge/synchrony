@@ -14,7 +14,9 @@ surrogate.ts (ts, distr.ts = NULL, trans.ts = NULL, nbreaks = 10)
 \arguments{
   \item{ts}{
 time series in matrix format (\code{n} rows x 2 columns). The first column should contain the time 
-steps and the second column should contain the values.}
+steps and the second column should contain the values. If \code{ts} is a column vector 
+instead of a matrix, then it will be automatically converted to a matrix with 
+column 1 corresponding to a time index ranging from 1 to the length of \code{ts}}
   \item{distr.ts}{
 binning of time series values. This parameter must be specified 
 if \code{trans.ts} is not set to \code{NULL}. Default is \code{NULL}.}
@@ -54,7 +56,7 @@ Tarik C. Gouhier (tarik.gouhier@gmail.com)
 
 }
 \examples{
-t1=cbind(1:100, runif(100))
+t1=runif(100)
 surr.t1=surrogate.ts(ts=t1)
 plot(t1, t="l")
 lines(surr.t1$surr.ts, col="red")
