@@ -4,8 +4,8 @@
 correlated.matrix
 }
 \description{
-Create an \code{ntimes} x \code{nspecies} matrix with correlation \eqn{\rho},
-standard deviation \eqn{\sigma}, and mean \eqn{\mu}
+Create an \code{ntimes} x \code{nspecies} matrix with correlation rho,
+standard deviation sigma, and mean mu
 }
 \usage{
 correlated.matrix (rho = 0, sigma = 1, mu = 0, ntimes = 200, nspecies = 10)

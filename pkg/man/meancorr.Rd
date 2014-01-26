@@ -9,12 +9,12 @@ The Monte Carlo randomizations are performed by shuffling the columns of the com
 matrix independently.
 }
 \usage{
-meancorr (comm.matrix, nrands = 0, alternative = c("two.tailed", "greater", "less"), 
+meancorr (data, nrands = 0, alternative = c("two.tailed", "greater", "less"), 
                             method = c("pearson", "kendall", "spearman"), 
                             type = 1, quiet = FALSE, ...)
 }
 \arguments{
- \item{comm.matrix}{
+ \item{data}{
 community matrix in wide format where each row contains the abundance at each time step
 and each column corresponds to a different species.
 }

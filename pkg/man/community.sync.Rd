@@ -12,11 +12,11 @@ matrix independently. This function also returns the mean correlation between th
 of the matrix.
 }
 \usage{
-community.sync (comm.matrix, nrands = 0, method = c("pearson", "kendall", "spearman"), 
+community.sync (data, nrands = 0, method = c("pearson", "kendall", "spearman"), 
                 alternative = c("greater", "less"), type = 1, quiet = FALSE, ...)
 }
 \arguments{
- \item{comm.matrix}{
+ \item{data}{
 community matrix in wide format where each row contains the abundance at each time step
 and each column corresponds to a different species.
 }

@@ -1,9 +1,9 @@
 ## Community matrix comm.matrix: n x m matrix with n=time step, m=species
-meancorr <- function (comm.matrix, nrands = 0, 
+meancorr <- function (data, nrands = 0, 
                             alternative=c("two.tailed", "greater", "less"), 
                             method=c("pearson", "kendall", "spearman"), 
                       type=1, quiet = FALSE, ...) {
-  comm.matrix=as.matrix(comm.matrix)
+  data=as.matrix(data)
   results=list()
   methods=c("pearson", "kendall", "spearman")
   method=match.arg(method, methods)
@@ -11,20 +11,20 @@ meancorr <- function (comm.matrix, nrands = 0,
   alternatives=c("two.tailed", "greater", "less")
   alternative=match.arg(tolower(alternative), alternatives)
   
-  results$obs=meancorr.aux (comm.matrix, method=method, ...)
+  results$obs=meancorr.aux (data, method=method, ...)
   
   if (nrands > 0) {
-    nr=NROW(comm.matrix)
-    nc=NCOL(comm.matrix)
+    nr=NROW(data)
+    nc=NCOL(data)
     if (!quiet)
       prog.bar=txtProgressBar(min = 0, max = nrands, style = 3)
     results$rands=numeric(length=nrands+1)*NA
     for (i in 1:nrands) {
       if (type==1)
-        rand.mat=apply(comm.matrix, 2, sample)
+        rand.mat=apply(data, 2, sample)
       else {
         lags=sample(1:nr, size=nc, replace=TRUE)
-        rand.mat=mlag(comm.matrix, lags)
+        rand.mat=mlag(data, lags)
       }
       results$rands[i]=meancorr.aux(rand.mat, method=method, ...)
       if (!quiet)

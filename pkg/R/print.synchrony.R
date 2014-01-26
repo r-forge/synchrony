@@ -47,9 +47,9 @@ print.synchrony <- function (x, digits=max(3L, getOption("digits") - 3L), ...) {
     cat("\nSpearman's ranked correlation: ")
     cat(format(x$spearman.corr, digits=digits))
     
-    if (!is.null(x$pval)) {
+    if (!is.null(x$pval.rand)) {
       cat("\nKendall's W p-value (one-tailed test [greater]): ")
-      cat(format(x$pval, digits=digits))
+      cat(format(x$pval.rand, digits=digits))
     }
   }
 }
