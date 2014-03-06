@@ -2,6 +2,16 @@
 \title{News for Package 'synchrony'}
 \encoding{UTF-8}
 
+
+\section{Changes in synchrony version 0.2.2 (2014-03-06)}{
+  \subsection{fixed}{
+    \itemize{
+    \item \code{vario.fit} handles NAs in \code{vario} objects more gracefully
+    \item print function for \code{phase.sync} object only prints the first few entries
+    }
+  }
+}
+
 \section{Changes in synchrony version 0.2.1 (2014-01-26)}{
   \subsection{fixed}{
     \itemize{

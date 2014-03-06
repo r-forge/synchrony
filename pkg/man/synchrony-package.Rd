@@ -15,8 +15,8 @@ generating autocorrelated and cross-correlated matrices.
 \tabular{ll}{
 Package: \tab synchrony\cr
 Type: \tab Package\cr
-Version: \tab 0.2.1\cr
-Date: \tab 2014-01-24\cr
+Version: \tab 0.2.2\cr
+Date: \tab 2014-03-06\cr
 License: \tab GPL (>=2)\cr
 URL: \tab http://synchrony.r-forge.r-project.org\cr
 LazyLoad: \tab yes\cr
