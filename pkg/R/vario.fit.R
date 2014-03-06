@@ -7,7 +7,8 @@ vario.fit <- function (vario, bins, weights=rep(1, length(vario)),
                                        b=0.1,
                                        c=0.1), control=list(maxit=10000)) {
   
-  data=list(vario=vario, bins=bins)
+  locs=which(!is.na(vario))
+  data=list(vario=vario[locs], bins=bins[locs])
   types=c("spherical", "gaussian", "nugget", "linear", "exponential", "sill", 
           "periodic", "hole")
   type=match.arg(tolower(type), types)
