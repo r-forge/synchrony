@@ -8,16 +8,17 @@ vario.fit <- function (vario, bins, weights=rep(1, length(vario)),
                                        c=0.1), control=list(maxit=10000)) {
   
   locs=which(!is.na(vario))
-  data=list(vario=vario[locs], bins=bins[locs])
+  data=data.frame(vario=vario[locs], bins=bins[locs])
+  weights=weights[locs]
   types=c("spherical", "gaussian", "nugget", "linear", "exponential", "sill", 
           "periodic", "hole")
   type=match.arg(tolower(type), types)
   
   ## Linear model used to determine initial parameters for finicky NLS
-  vario.lin=lm(vario ~ bins, weights=weights)
+  vario.lin=lm(vario ~ bins, weights=weights, data=data)
   
   if (type=="nugget") {
-    vario.mod=lm(vario ~ 1, weights=weights)
+    vario.mod=lm(vario ~ 1, weights=weights, data=data)
     names=c("nugget")    
     success=TRUE
     vario.mod$convergence=0
