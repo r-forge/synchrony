@@ -1,18 +1,16 @@
-bibentry("Manual",
-         title = "synchrony: Methods for computing spatial, temporal, and spatiotemporal statistics in R",
-         author = person("Tarik C. Gouhier"),
+bibentry("Article",
+         key          = "gouhier_guichard_14",
+         title        = "Synchrony: quantifying variability in space and time",
+         author       = c(person("Gouhier", "T.C"), person("Guichard", "F.")),
          address      = "tarik.gouhier@gmail.com",
-         year         = format(as.Date(meta$Date), "%Y"),
+         year         = "2014",
+         volume       = "5",
+         pages        = "524--533",
+         journal      = "Methods in Ecology and Evolution",
          url          = "http://synchrony.r-forge.r-project.org",
-	 note         = paste("R package version", meta$Version),
+	       note         = paste("R package version", meta$Version),
          
-         textVersion = 
-         paste("Gouhier, T. C. (", format(as.Date(meta$Date), "%Y"), "). ", 
-               "synchrony: tools for computing spatial, temporal, and spatiotemporal statistics in R",
-               sep=""),
-	       
-         mheader = "To cite in publications use:",
-	 
-	 mfooter = 
-         paste("Please cite this package if you use it for data analysis.")
+         textVersion = "Gouhier, T.C., and F. Guichard. 2014. Synchrony: quantifying variability in space and time. Methods in Ecology and Evolution 5:524-533",
+         mheader = "To cite in publications use:",	 
+      	 mfooter = "Please cite this package if you use it for data analysis."
 	)
